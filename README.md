@@ -1,37 +1,42 @@
+<!--
+ * @Author: randolph
+ * @Date: 2020-06-01 23:55:30
+ * @LastEditors: randolph
+ * @LastEditTime: 2020-06-02 13:42:13
+ * @version: 1.0
+ * @Contact: cyg0504@outlook.com
+ * @Descripttion: 
+--> 
 # husky_pywork
 
-#### 介绍
+### 1.介绍
 用来记录自己与python学友共同完成的有意思的问题~
 
-#### 软件架构
-软件架构说明
+### 2.软件架构
 
+| 项目    | 描述                                    |
+| ------- | --------------------------------------- |
+| python3 | 主要编程语言                            |
+| jieba   | 自然语言处理库(中文最好的处理工具)      |
+| pandas  | 代替python的原生文件读取包,提高处理效率 |
 
-#### 安装教程
+### 3.安装教程
+#### 1.python3安装后，使用全局环境即可;
+#### 2.需要配置pip的国内源
+位置`C:\Users\randolph\AppData\Roaming\pip\`
+下创建`pip.ini`文件，内容为
+`[global] 
+timeout = 6000 
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+[install]
+trusted-host = https://pypi.tuna.tsinghua.edu.cn`
+#### 3.打开cmd安装其他所需的三方库：
+`pip install jieba`
+`pip install pandas`
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+### 4.使用说明
 
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 码云特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5.  码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+| 模块         | 说明                                                         |
+| ------------ | ------------------------------------------------------------ |
+| poem_300     | [用jieba和re分析唐诗三百首的小题目](https://blog.csdn.net/qq_33997198/article/details/106493983)(需要安装jieba库) |
+| handle_excel | pandas处理表格的例子(原始文件未上传、需要安装pandas)         |

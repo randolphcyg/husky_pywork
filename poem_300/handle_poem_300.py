@@ -4,7 +4,7 @@
 @Author: randolph
 @Date: 2020-06-01 23:58:59
 @LastEditors: randolph
-@LastEditTime: 2020-06-02 12:47:23
+@LastEditTime: 2020-06-02 13:56:20
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 用jieba处理唐诗三百首作业
@@ -55,7 +55,7 @@ def read_poem_file(path):
         return clear_content_list
 
 
-def count_authors(data, n=None):
+def count_authors(data, n):
     '''统计作者及频次排行
     '''
     authors_list = []
@@ -68,7 +68,6 @@ def count_authors(data, n=None):
     for author in sort_result[:n]:
         author_info = list(author)
         print(author_info[0], author_info[1])
-    return authors_list
 
 
 def show_poem(flag):
@@ -122,23 +121,28 @@ def count_names(n):
     '''统计全文范围内的中文姓名及频次
     '''
     with open(POEM_FILE, mode='r', encoding='utf-8') as poem_file:
+        # 先获取作者列表
+        data = read_poem_file(POEM_FILE)
+        authors_list = []
+        for item in data:
+            if bool(re.search(r'\d', item)):                    # 搜索包含数字的行
+                local = re.findall(r'\d{3}(.+?) ', item)        # 惰性匹配
+                authors_list.append(local[0])
+        # 然后全文范围内处理
         content = poem_file.read()
         names_list = []
         # 切词
         words = pseg.cut(content)
         for w in words:
-            if w.flag == 'nr' and 1 < len(w.word):
+            if w.flag == 'nr' and 1 < len(w.word) and w.word in authors_list:
                 names_list.append(w.word)
         # 统计姓名列表
         result = Counter(names_list)
         sort_result = sorted(result.items(), key=lambda x: x[1], reverse=True)      # 排序
-        # 从 count_authors 返回作者列表
-        ori_data_list = read_poem_file(POEM_FILE)
-        ns = count_authors(ori_data_list)
+        # 只打印n条信息
         for name in sort_result[:n]:
             name_info = list(name)
-            if name_info[0] in ns:
-                print(name_info[0], name_info[1])
+            print(name_info[0], name_info[1])
 
 
 if __name__ == "__main__":
