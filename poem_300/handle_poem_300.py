@@ -4,16 +4,22 @@
 @Author: randolph
 @Date: 2020-06-01 23:58:59
 @LastEditors: randolph
-@LastEditTime: 2020-06-02 09:58:09
+@LastEditTime: 2020-06-02 12:47:23
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 用jieba处理唐诗三百首作业
 '''
+import logging
 import re
-import jieba
 from collections import Counter
-POEM_FILE = 'e:/randolph/husky_pywork/poem_300/poem.txt'
-STOP_FILE = 'e:/randolph/husky_pywork/poem_300/stopwords.txt'
+
+import jieba        # 处理自然语言库
+import jieba.posseg as pseg
+
+jieba.setLogLevel(logging.INFO)     # 提升jieba日志级别 关闭jieba debug日志输出
+jieba.initialize()                  # 手动初始化jieba 加快调用函数速度
+
+POEM_FILE = 'e:/randolph/husky_pywork/poem_300/poem.txt'        # 古诗词源文件路径
 
 
 def route(ori_data):
@@ -22,20 +28,22 @@ def route(ori_data):
     flag = input('')
     if flag == '作者':
         n = int(input(''))
-        count_authors(ori_data, flag, n)
+        count_authors(ori_data, n)              # 统计作者姓名频次
     elif flag == '人物':
         n = int(input(''))
-        count_names(ori_data, flag, n)
+        count_names(n)                          # 统计人物姓名频次
     elif flag == '唐诗':
-        count_poems(ori_data)   # 统计唐诗数量
-        exit()          # 结束
+        count_poems(ori_data)                   # 统计唐诗数量
+        exit()                                  # 结束
     elif flag == '飞花':
         s = str(input(''))
-        poem_rhythm(ori_data, key_character=s)
+        poem_rhythm(ori_data, key_character=s)  # 输出飞花令诗句
     elif flag.isdigit() and len(flag) == 3:
-        show_poem(flag)
+        show_poem(flag)                         # 输出对应编号古诗
     else:
         print('输入错误')
+        exit()          # 结束
+    route(ori_data)     # 每次输入完成将重新回到主路由
 
 
 def read_poem_file(path):
@@ -43,17 +51,16 @@ def read_poem_file(path):
     '''
     with open(path, mode='r', encoding='utf-8') as poem_file:
         content = poem_file.readlines()
-        # clear_content_list = [x.strip('\n') for x in content]
         clear_content_list = [x.strip() for x in content if x.strip() != '']      # 去除换行符、空字符
         return clear_content_list
 
 
-def count_authors(data, flag, n):
+def count_authors(data, n=None):
     '''统计作者及频次排行
     '''
     authors_list = []
     for item in data:
-        if bool(re.search(r'\d', item)):        # 搜索包含数字的行
+        if bool(re.search(r'\d', item)):                    # 搜索包含数字的行
             local = re.findall(r'\d{3}(.+?) ', item)        # 惰性匹配
             authors_list.append(local[0])
     result = Counter(authors_list)                          # 统计列表元素
@@ -61,6 +68,7 @@ def count_authors(data, flag, n):
     for author in sort_result[:n]:
         author_info = list(author)
         print(author_info[0], author_info[1])
+    return authors_list
 
 
 def show_poem(flag):
@@ -74,10 +82,15 @@ def show_poem(flag):
         # else:
         #     flag_plus = str(int(flag)+1)
         # pattern1 = str(flag) + '(.*)' + flag_plus
-        # 第二种匹配方式 简单
-        pattern2 = str(flag) + r'(.+?)\d{3}'
-        local = re.findall(pattern2, content, re.S)[0]  # re.S 匹配换行符 支持多行匹配
-        print(local)
+        # 第二种匹配方式 灵活简单
+        pattern2 = str(flag) + r'(.+?)\d{3}'    # 其余通用匹配
+        pattern3 = str(flag) + r'(.+?)$'        # 320特殊情况
+        if flag != '320':
+            local = re.findall(pattern2, content, re.S)[0]  # re.S 匹配换行符 支持多行匹配
+            print(local.split(' \n\n')[0])      # 去除诗末空格和俩换行
+        else:
+            local = re.findall(pattern3, content, re.S)[0]
+            print(local)
 
 
 def count_poems(data):
@@ -105,16 +118,29 @@ def poem_rhythm(data, key_character):
             print(line)
 
 
-def count_names(data, flag, n):
+def count_names(n):
     '''统计全文范围内的中文姓名及频次
     '''
-    pass
+    with open(POEM_FILE, mode='r', encoding='utf-8') as poem_file:
+        content = poem_file.read()
+        names_list = []
+        # 切词
+        words = pseg.cut(content)
+        for w in words:
+            if w.flag == 'nr' and 1 < len(w.word):
+                names_list.append(w.word)
+        # 统计姓名列表
+        result = Counter(names_list)
+        sort_result = sorted(result.items(), key=lambda x: x[1], reverse=True)      # 排序
+        # 从 count_authors 返回作者列表
+        ori_data_list = read_poem_file(POEM_FILE)
+        ns = count_authors(ori_data_list)
+        for name in sort_result[:n]:
+            name_info = list(name)
+            if name_info[0] in ns:
+                print(name_info[0], name_info[1])
 
 
 if __name__ == "__main__":
     ori_data_list = read_poem_file(POEM_FILE)
     route(ori_data_list)
-    # show_poem('084')
-    # count_poems(ori_data_list)
-    # poem_rhythm(ori_data_list, '秦')
-    # count_authors(ori_data_list, '作者', 10)
