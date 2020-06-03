@@ -2,13 +2,14 @@
 @Author: randolph
 @Date: 2020-06-02 21:34:35
 @LastEditors: randolph
-@LastEditTime: 2020-06-03 13:51:16
+@LastEditTime: 2020-06-03 17:45:32
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
 '''
 import os
 import os.path
+import re
 import tkinter
 import tkinter.messagebox
 
@@ -66,50 +67,80 @@ entry_chinese = tkinter.Entry(root, width=COMMON_W, textvariable=var_chinese)
 entry_chinese.place(x=365, y=200, width=COMMON_W_ENTRY, height=COMMON_H)
 
 
+def is_number(num):
+    pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
+    result = pattern.match(num)
+    if result:
+        return True
+    else:
+        return False
+
+
+def vaild_data():
+    '''数据校验逻辑
+    '''
+    try:
+        name = entry_name.get()
+        cla = entry_class.get()
+        num = entry_num.get()
+        english = entry_english.get()
+        math = entry_math.get()
+        chinese = entry_chinese.get()
+        if not num or not name or not cla:
+            tkinter.messagebox.showerror('信息', message="姓名班级学号不可为空，请检查输入！")
+        elif not is_number(num):
+            tkinter.messagebox.showerror('警告', message="学号必须为正整数！请输入正确值！")
+        elif not name.isalpha():
+            tkinter.messagebox.showerror('警告', message="姓名不合法！请修改后提交！")
+        elif not english or not math or not chinese:
+            tkinter.messagebox.showerror('信息', message="语数英分数不能为空！请仔细检查！")
+        elif not is_number(english):
+            tkinter.messagebox.showerror('警告', message="英语分数非法值！请仔细检查！")
+        elif not is_number(math):
+            tkinter.messagebox.showerror('警告', message="数学分数非法值！请仔细检查！")
+        elif not is_number(english):
+            tkinter.messagebox.showerror('警告', message="语文分数非法值！请仔细检查！")
+        else:
+            num = int(num)
+            english = float(english)
+            math = float(math)
+            chinese = float(chinese)
+
+            if english < 0:
+                tkinter.messagebox.showerror('警告', message="英语分数不能为负数！请仔细检查！")
+            elif math < 0:
+                tkinter.messagebox.showerror('警告', message="数学分数不能为负数！请仔细检查！")
+            elif chinese < 0:
+                tkinter.messagebox.showerror('警告', message="语文分数不能为负数！请仔细检查！")
+            elif english > 120:
+                tkinter.messagebox.showerror('警告', message="英语分数满分为120！请输入正确值！")
+            elif math > 200:
+                tkinter.messagebox.showerror('警告', message="数学分数满分为200！请输入正确值！")
+            elif chinese > 160:
+                tkinter.messagebox.showerror('警告', message="语文分数满分为160！请输入正确值！")
+            else:
+                return name, cla, num, english, math, chinese
+    except Exception as e:
+        tkinter.messagebox.showerror('警告', message=e)
+
+
 def confirm():
     '''确认 保存信息 excel io的处理
     '''
-    try:
-        # 校验操作
-        name = str(entry_name.get())
-        cla = str(entry_class.get())
-        num = str(entry_num.get())
-        english = float(entry_english.get())
-        math = float(entry_math.get())
-        chinese = float(entry_chinese.get())
-        if not num:
-            tkinter.messagebox.showerror('警告', message="学号不可为空，请检查输入！")
-        if english < 0 or math < 0 or chinese < 0:
-            tkinter.messagebox.showerror('警告', message="语数外分数非法值！请仔细检查！")
-        elif english > 100 or math > 100 or chinese > 100:
-            tkinter.messagebox.showerror('警告', message="语数外分数超出范围！请仔细检查！")
-        print(name, cla, num, english, math, chinese)
-        # 表格操作
-        is_exist = os.path.exists(output_file)
-        if not is_exist:        # 校验表格存在性
-            df = pd.DataFrame(columns=["姓名", "班级", "学号", "英语", "数学", "语文"])
-            df.to_excel(output_file, encoding='utf-8', sheet_name='学生信息', index=False)
-        # 写数据之前作已有数据校验
-        # df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
-        # df.iloc[2,1] = "新能源一班"     # 修改df指定单元格数据
-        # print(df.loc[:])
-        # pd.DataFrame(df).to_excel(output_file, sheet_name='学生信息', header=True, index=False)
-
-        # 表格写操作
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
-        row, col = df.shape
-        cols = df.columns.tolist()                  # 表格列名列表
-        is_ex_null = df.isnull().any().tolist()     # 列是否存在空值
-        dic = dict(zip(cols, is_ex_null))           # 存在空值的列
-        print(row, col)
-        df.loc[row] = [name, cla, num, english, math, chinese]
-        # df.loc[row] = ["测试", "计算机二班", 1516240223, 56, 67, 87]
+    name, cla, num, english, math, chinese = vaild_data()
+    # 写数据之前作已有数据校验
+    df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+    row, col = df.shape
+    nums_list = df.iloc[:, 2].values.tolist()
+    if num in nums_list:
+        tar_row = nums_list.index(num)
+        df.loc[tar_row] = [name, cla, num, english, math, chinese]
         pd.DataFrame(df).to_excel(output_file, sheet_name='学生信息', header=True, index=False)
-        tkinter.messagebox.showinfo(title='恭喜', message='学生信息登记保存成功！')
-    except Exception as e:
-        # tkinter.messagebox.showerror('警告', message=e)
-        # return None
-        print(e)
+        tkinter.messagebox.showinfo(title='信息', message='学生信息登记更新并保存成功！')
+    else:
+        df.loc[row] = [name, cla, num, english, math, chinese]
+        pd.DataFrame(df).to_excel(output_file, sheet_name='学生信息', header=True, index=False)
+        tkinter.messagebox.showinfo(title='信息', message='学生信息登记保存成功！')
 
 
 # 确定按钮
@@ -144,6 +175,10 @@ button_confirm = tkinter.Button(root, text='退出', font=COMMON_F, command=quit
 button_confirm.place(x=330, y=BUTTON_Y, width=COMMON_W, height=COMMON_H)
 
 if __name__ == "__main__":
+    # 文件存在性校验
+    is_exist = os.path.exists(output_file)
+    if not is_exist:        # 校验表格存在性
+        df = pd.DataFrame(columns=["姓名", "班级", "学号", "英语", "数学", "语文"])
+        df.to_excel(output_file, encoding='utf-8', sheet_name='学生信息', index=False)
     # 启动消息循环
     root.mainloop()
-    # confirm()
