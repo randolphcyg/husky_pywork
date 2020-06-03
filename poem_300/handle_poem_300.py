@@ -4,7 +4,7 @@
 @Author: randolph
 @Date: 2020-06-01 23:58:59
 @LastEditors: randolph
-@LastEditTime: 2020-06-03 14:09:43
+@LastEditTime: 2020-06-03 19:49:16
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 用jieba处理唐诗三百首作业
@@ -13,7 +13,7 @@ import logging
 import re
 from collections import Counter
 
-import jieba        # 处理自然语言库
+import jieba  # 处理自然语言库
 import jieba.posseg as pseg
 
 jieba.setLogLevel(logging.INFO)     # 提升jieba日志级别 关闭jieba debug日志输出
@@ -26,22 +26,22 @@ def route(ori_data):
     '''函数入口判断
     '''
     flag = input('')
-    if flag == '作者':
+    if flag == "作者":
         n = int(input(''))
         count_authors(ori_data, n)              # 统计作者姓名频次
-    elif flag == '人物':
+    elif flag == "人物":
         n = int(input(''))
         count_names(n)                          # 统计人物姓名频次
-    elif flag == '唐诗':
+    elif flag == "唐诗":
         count_poems(ori_data)                   # 统计唐诗数量
         exit()                                  # 结束
-    elif flag == '飞花':
+    elif flag == "飞花":
         s = str(input(''))
         poem_rhythm(ori_data, key_character=s)  # 输出飞花令诗句
     elif flag.isdigit() and len(flag) == 3:
         show_poem(flag)                         # 输出对应编号古诗
     else:
-        print('输入错误')
+        print("输入错误")
         exit()          # 结束
     route(ori_data)     # 每次输入完成将重新回到主路由
 
@@ -69,7 +69,7 @@ def count_authors(data, n):
 
         # 将字符串空格去掉后，判断是否全为字符，不全是字符，则说明包含数字，则取到数字和作者这行
         if not item.replace(' ', '').isalpha():
-            authors_list.append(item.split(' ')[0][3:])  # 用空格切分字符串后从第三个字符取导最后即为姓名
+            authors_list.append(item.split(' ')[0][3:])     # 用空格切分字符串后从第三个字符取导最后即为姓名
 
     result = Counter(authors_list)                          # 统计列表元素
     sort_result = sorted(result.items(), key=lambda x: x[1], reverse=True)      # 排序
