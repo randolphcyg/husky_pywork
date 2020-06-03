@@ -4,7 +4,7 @@
 @Author: randolph
 @Date: 2020-06-01 23:58:59
 @LastEditors: randolph
-@LastEditTime: 2020-06-02 13:56:20
+@LastEditTime: 2020-06-03 14:09:43
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 用jieba处理唐诗三百首作业
@@ -57,12 +57,20 @@ def read_poem_file(path):
 
 def count_authors(data, n):
     '''统计作者及频次排行
+    应网友要求，不用正则匹配，也可以获取全量作者
+    第一个for循环中，注释了的三行和接下来的两行代码效果相同
     '''
     authors_list = []
+    sen = []
     for item in data:
-        if bool(re.search(r'\d', item)):                    # 搜索包含数字的行
-            local = re.findall(r'\d{3}(.+?) ', item)        # 惰性匹配
-            authors_list.append(local[0])
+        # if bool(re.search(r'\d', item)):                    # 搜索包含数字的行
+        #     local = re.findall(r'\d{3}(.+?) ', item)        # 惰性匹配
+        #     authors_list.append(local[0])
+
+        # 将字符串空格去掉后，判断是否全为字符，不全是字符，则说明包含数字，则取到数字和作者这行
+        if not item.replace(' ', '').isalpha():
+            authors_list.append(item.split(' ')[0][3:])  # 用空格切分字符串后从第三个字符取导最后即为姓名
+
     result = Counter(authors_list)                          # 统计列表元素
     sort_result = sorted(result.items(), key=lambda x: x[1], reverse=True)      # 排序
     for author in sort_result[:n]:
@@ -148,3 +156,4 @@ def count_names(n):
 if __name__ == "__main__":
     ori_data_list = read_poem_file(POEM_FILE)
     route(ori_data_list)
+    # count_authors(ori_data_list, 5)       # 不用正则取作者测试    通过√
