@@ -2,7 +2,7 @@
  * @Author: randolph
  * @Date: 2020-06-01 23:55:30
  * @LastEditors: randolph
- * @LastEditTime: 2020-06-05 10:41:31
+ * @LastEditTime: 2020-06-10 12:49:49
  * @version: 1.0
  * @Contact: cyg0504@outlook.com
  * @Descripttion: 
@@ -23,7 +23,7 @@
 ### 3.安装教程
 #### 1.python3安装后，使用全局环境即可;
 #### 2.需要配置pip的国内源
-位置`C:\Users\randolph\AppData\Roaming\pip\`
+位置`C:\Users\<用户名>\AppData\Roaming\pip\`
 下创建`pip.ini`文件，内容为
 `[global] 
 timeout = 6000 
@@ -40,9 +40,10 @@ trusted-host = https://pypi.tuna.tsinghua.edu.cn`
 
 ### 4.使用说明
 
-| 模块          | 描述                                                         |
-| ------------- | ------------------------------------------------------------ |
-| handle_excel  | pandas处理表格的例子(原始文件未上传、需要安装pandas)         |
-| poem_300      | [用jieba和re分析唐诗三百首的小题目](https://blog.csdn.net/qq_33997198/article/details/106493983)(需要安装jieba库) |
-| handle_tk_gui | [python3 tkinter和pandas完成学生信息管理系统(详解)](https://blog.csdn.net/qq_33997198/article/details/106535544) |
-| handle_txt    | 用来存放只对字符串和txt文件处理的代码                        |
+| 模块                  | 描述                                                         |
+| --------------------- | ------------------------------------------------------------ |
+| handle_excel          | pandas处理表格的例子(原始文件未上传、需要安装pandas)         |
+| poem_300              | [用jieba和re分析唐诗三百首的小题目](https://blog.csdn.net/qq_33997198/article/details/106493983)(需要安装jieba库) |
+| handle_tk_gui         | [python3 tkinter和pandas完成学生信息管理系统(详解)](https://blog.csdn.net/qq_33997198/article/details/106535544) |
+| handle_txt            | 用来存放只对字符串和txt文件处理的代码                        |
+| handle_matplotlib_pic | [matplotlib作图实例](https://blog.csdn.net/qq_33997198/article/details/106663268) |
