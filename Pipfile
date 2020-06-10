@@ -14,6 +14,9 @@ xlrd = "*"
 openpyxl = "*"
 scrapy = "*"
 pymongo = "*"
+matplotlib = "*"
+lmfit = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.6"
