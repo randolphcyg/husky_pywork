@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-05 13:27:20
 @LastEditors: randolph
-@LastEditTime: 2020-06-10 12:25:15
+@LastEditTime: 2020-06-10 13:57:04
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 【matplotlib作图三个题目】
@@ -66,6 +66,7 @@ def pic_2():
     src_file = os.path.join(ROOT_PATH, "XRD_AFO.csv")           # 绝对路径拼接
 
     with open(src_file, 'r', encoding='utf-8') as data:
+        data = data.readlines()[1:]         # 从第二行开始读取，忽略表头
         ls = [x.split(',') for x in data]
         lsx = [float(x[0]) for x in ls]
         lsy = [float(x[1]) for x in ls]
@@ -92,7 +93,33 @@ def pic_3():
     plt.show()
 
 
+def pic_4():
+    '''图四 饼图
+    '''
+    import pandas as pd
+    ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+    src_file = os.path.join(ROOT_PATH, "2012-19sport.csv")           # 绝对路径拼接
+    file = pd.read_csv(src_file)
+    df = pd.DataFrame(file)
+    df_2013 = df[df['Year'] == 2013]      # 选取Year列为2013的数据
+    # print(df_2013.iloc[0])
+    rank, names, pay, salary, endorsements, sport, year = df_2013['Rank'], df_2013['Name'], df_2013['Pay'], 
+    df_2013['Salary/Winnings'], df_2013['Endorsements'], df_2013['Sport'], df_2013['Year']
+
+    x=df['2013年体育项目收入']
+    explode=(0.1,0,0,0,0,0,0,0,0,0)
+    plt.pie(x,labels=names,explode=explode,startangle=60,autopct='%1.1f%%')
+    plt.axis("equal")
+    plt.title('国民总收入')
+    plt.show()
+
+    # sizes = [16,14,7,4,3,30]
+    # plt.pie(sizes)
+    # plt.show()
+
+
 if __name__ == "__main__":
-    pic_1()
-    # pic_2()
+    # pic_1()
+    pic_2()
     # pic_3()
+    # pic_4()
