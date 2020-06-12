@@ -2,10 +2,10 @@
 @Author: randolph
 @Date: 2020-06-10 10:31:28
 @LastEditors: randolph
-@LastEditTime: 2020-06-10 12:28:19
+@LastEditTime: 2020-06-10 14:16:51
 @version: 1.0
 @Contact: cyg0504@outlook.com
-@Descripttion: python matplotlib XRD分析 
+@Descripttion: python matplotlib XRD分析
 测试 田纳西大学计算机材料科学专业的博士生 Chris Ostrouchov的代码
 pip install lmfit
 https://chrisostrouchov.com/post/peak_fit_xrd_python/
@@ -196,12 +196,13 @@ def update_spec_from_peaks(spec, model_indicies, peak_widths=(10, 25), **kwargs)
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 src_file = os.path.join(ROOT_PATH, "XRD_AFO.csv")
 df = pd.read_csv(src_file, header=None)
-df = df.astype(float)       # 转换为float类型
+df = df[1:].astype(float)       # 去表头并转换为float类型
 
 spec = {
     'x': df[0].values,
     'y': df[1].values,
     'model': [
+        {'type': 'GaussianModel'},
         {'type': 'VoigtModel'},
         {'type': 'VoigtModel'},
         {'type': 'VoigtModel'},

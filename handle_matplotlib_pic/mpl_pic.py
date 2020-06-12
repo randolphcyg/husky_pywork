@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-05 13:27:20
 @LastEditors: randolph
-@LastEditTime: 2020-06-10 13:57:04
+@LastEditTime: 2020-06-10 14:00:17
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 【matplotlib作图三个题目】
@@ -105,8 +105,9 @@ def pic_4():
     # print(df_2013.iloc[0])
     rank, names, pay, salary, endorsements, sport, year = df_2013['Rank'], df_2013['Name'], df_2013['Pay'], 
     df_2013['Salary/Winnings'], df_2013['Endorsements'], df_2013['Sport'], df_2013['Year']
-
+    # 需要计算
     x=df['2013年体育项目收入']
+    
     explode=(0.1,0,0,0,0,0,0,0,0,0)
     plt.pie(x,labels=names,explode=explode,startangle=60,autopct='%1.1f%%')
     plt.axis("equal")
