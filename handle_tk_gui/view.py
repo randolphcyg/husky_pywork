@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-14 00:37:03
+@LastEditTime: 2020-06-15 15:13:10
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -13,12 +13,14 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter.messagebox import *
+from PIL import Image, ImageTk
 
 import pandas as pd
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 temp_file = os.path.join(ROOT_PATH, 'temp.xlsx')
 output_file = os.path.join(ROOT_PATH, 'student_info.xlsx')
+pic = os.path.join(ROOT_PATH, 'randolph.jpg')
 
 
 class InputFrame(Frame):                # 继承Frame类
@@ -41,15 +43,15 @@ class InputFrame(Frame):                # 继承Frame类
 
         Label(self, text="信息录入页面", font=24, bg='#6A5ACD').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
-        Label(self, text="学号:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
-        self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=1, sticky=W, pady=20)
-
-        Label(self, text="姓名:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
         self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=3, sticky=W)
+        self.entry_name.grid(row=1, column=1, sticky=W)
+
+        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        self.var_num = tkinter.StringVar(self, value='')
+        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
         # 第二行
         Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
@@ -94,7 +96,13 @@ class InputFrame(Frame):                # 继承Frame类
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
         Button(self, text="保存", font=18, command=self.save).grid(row=6, column=1, sticky=W)
-        Button(self, text="取消", font=18, command=self.cancel).grid(row=6, column=1, sticky=N)
+        Button(self, text="清空", font=18, command=self.cancel).grid(row=6, column=1, sticky=N)
+        Button(self, text="退出", font=18, command=self.quit).grid(row=6, column=1, sticky=E)
+
+    def quit(self):
+        '''退出程序
+        '''
+        self.root.destroy()
 
     def is_number(self, num):
         pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
@@ -183,17 +191,17 @@ class DelFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="信息查询删除页面", font=24, bg='#8B008B').grid(row=0, column=1, sticky=N, pady=10)
+        Label(self, text="信息查询删除页面", font=24, bg='#FF7F50').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
-        Label(self, text="学号:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
-        self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=1, sticky=W, pady=20)
-
-        Label(self, text="姓名:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
         self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=3, sticky=W)
+        self.entry_name.grid(row=1, column=1, sticky=W)
+
+        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        self.var_num = tkinter.StringVar(self, value='')
+        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
         # 第二行
         Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
@@ -238,7 +246,7 @@ class DelFrame(Frame):
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
         Button(self, text="查询", font=18, command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="删除", font=18, command=self.delete).grid(row=6, column=2, sticky=N)
+        Button(self, text="删除", font=18, command=self.delete).grid(row=6, column=1, sticky=N)
         Button(self, text="取消", font=18, command=self.cancel).grid(row=6, column=1, sticky=E)
 
     def fetch(self):
@@ -395,15 +403,15 @@ class UpdateFrame(Frame):
     def createPage(self):
         Label(self, text="信息查询修改页面", font=24, bg='#D8BFD8').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
-        Label(self, text="学号:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
-        self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=1, sticky=W, pady=20)
-
-        Label(self, text="姓名:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
         self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=3, sticky=W)
+        self.entry_name.grid(row=1, column=1, sticky=W)
+
+        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        self.var_num = tkinter.StringVar(self, value='')
+        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
         # 第二行
         Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
@@ -448,7 +456,7 @@ class UpdateFrame(Frame):
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
         Button(self, text="查询", font=18, command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="保存", font=18, command=self.update).grid(row=6, column=2, sticky=N)
+        Button(self, text="保存", font=18, command=self.update).grid(row=6, column=1, sticky=N)
         Button(self, text="取消", font=18, command=self.cancel).grid(row=6, column=1, sticky=E)
 
     def fetch(self):
@@ -620,7 +628,182 @@ class CountFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text='报表界面').grid()
+        Label(self, text="报表页面", font=24, bg='#DDA0DD').grid(row=0, column=1, sticky=N, pady=10)
+        # 第一行
+        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
+        self.var_name = tkinter.StringVar(self, value='')
+        self.entry_name = Entry(self, textvariable=self.var_name, width=30)
+        self.entry_name.grid(row=1, column=1, sticky=W)
+
+        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        self.var_num = tkinter.StringVar(self, value='')
+        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
+        # 第二行
+        Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
+        self.var_cla = tkinter.StringVar(self, value='')
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=W, padx=40, pady=5)
+
+        Label(self, text="总评:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
+        self.var_evaluation = tkinter.StringVar(self, value='')
+        self.label_evaluation = Label(self, text="", font=20, textvariable=self.var_evaluation).grid(row=2, column=3, sticky=W, padx=40, pady=5)
+        # 第三行
+        Label(self, text="不及格:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
+        self.var_failed_sub_count = tkinter.StringVar(self, value='')
+        self.label_failed_sub_count = Label(self, text="", font=20, textvariable=self.var_failed_sub_count).grid(row=3, column=1, sticky=W, padx=40, pady=5)
+
+        # Label(self, text="及格:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
+        # self.var_pass_sub_count = tkinter.StringVar(self, value='')
+        # self.label_pass_sub_count = Label(self, text="", font=20, textvariable=self.var_pass_sub_count).grid(row=3, column=3, sticky=W, padx=40, pady=5)
+        # 第四行
+        Label(self, text="中等:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
+        self.var_fair_sub_count = tkinter.StringVar(self, value='')
+        self.label_fair_sub_count = Label(self, text="", font=20, textvariable=self.var_fair_sub_count).grid(row=4, column=1, sticky=W, padx=40, pady=5)
+
+        Label(self, text="良好:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
+        self.var_good_sub_count = tkinter.StringVar(self, value='')
+        self.label_good_sub_count = Label(self, text="", font=20, textvariable=self.var_good_sub_count).grid(row=4, column=3, sticky=W, padx=40, pady=5)
+        # 第五行
+        Label(self, text="优秀:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
+        self.var_excellent_sub_count = tkinter.StringVar(self, value='')
+        self.label_excellent_sub_count = Label(self, text="", font=20, textvariable=self.var_excellent_sub_count).grid(row=5, column=1, sticky=W, padx=40, pady=5)
+
+        Label(self, text="绩点:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
+        self.var_gpa = tkinter.StringVar(self, value='')
+        self.label_gpa = Label(self, text="", font=20, textvariable=self.var_gpa).grid(row=5, column=3, sticky=W, padx=40, pady=5)
+
+        # 第六行
+        Label(self, text="平均成绩:", font=20).grid(row=6, column=0, sticky=E, padx=40, pady=5)
+        self.var_average_grade = tkinter.StringVar(self, value='')
+        self.label_average_grade = Label(self, text="", font=20, textvariable=self.var_average_grade).grid(row=6, column=1, sticky=W, padx=40, pady=5)
+
+        Label(self, text="总成绩:", font=20).grid(row=6, column=2, sticky=E, padx=40, pady=5)
+        self.var_total_grade = tkinter.StringVar(self, value='')
+        self.label_total_grade = Label(self, text="", font=20, textvariable=self.var_total_grade).grid(row=6, column=3, sticky=W, padx=40, pady=5)
+
+        # 第七行
+        Button(self, text="查询报表", font=18, command=self.fetch).grid(row=7, column=1, sticky=W)
+        Button(self, text="清空", font=18, command=self.cancel).grid(row=7, column=1, sticky=E)
+
+    def fetch(self):
+        '''根据学号或姓名查询并返回成绩报表
+        '''
+        num = self.var_num.get()
+        name = self.var_name.get()        # 先不根据名字搜索，如果有重名情况，则提示需要输入学号辅助判断
+        self.cancel()
+        if num and name:
+            num = int(num)          # 注意输入的学号都要转成int类型才能用
+            self.var_num.set(num)
+            self.var_name.set(name)
+        elif num:
+            num = int(num)
+            self.var_num.set(num)
+        elif name:
+            self.var_name.set(name)
+
+        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        row, col = df.shape
+        names_list = df.iloc[:, 1].values.tolist()      # 姓名列表
+        nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
+        name_exist_time = names_list.count(name)        # 姓名出现的次数：0次没有此人，1次仅有一个，1个以上需学号查询
+
+        if name:            # 先根据姓名查询
+            if name_exist_time == 0:
+                tkinter.messagebox.showinfo(title="警告", message="查无此人！")
+            elif name_exist_time == 1:
+                tar_row = names_list.index(name)
+                fetch_data_list = df.loc[tar_row].tolist()
+                self.fill_table(fetch_data_list)
+            elif name_exist_time != 1:
+                tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
+        elif num:           # 再根据学号查
+            if num in nums_list:
+                tar_row = nums_list.index(num)
+                fetch_data_list = df.loc[tar_row].tolist()
+                self.fill_table(fetch_data_list)
+
+    def gpa_standard(self, sub_list):
+        '''标准gpa计算改进4.0(2)版本算法
+        '''
+        res = 0
+        for sub in sub_list:
+            if 75 >= sub >= 60:
+                res += 2
+            if 85 >= sub >= 75:
+                res += 3
+            if sub > 85:
+                res += 4
+        return round(res / len(sub_list), 2)
+
+    def fill_table(self, data_list):
+        '''将查询值塞回界面 textvariable
+        '''
+        num, name, cla, gender, sub1, sub2, sub3, sub4, sub5, sub6 = data_list
+        sub_list = [sub1, sub2, sub3, sub4, sub5, sub6]
+        failed_sub_count = 0
+        # pass_sub_count = 0
+        fair_sub_count = 0
+        good_sub_count = 0
+        excellent_sub_count = 0
+        # course_credit_list = [2, 6, 4, 3, 3, 2]         # 课程学分列表(自定义) 先不管课程学分
+        gpa = self.gpa_standard(sub_list)
+        average_grade = 0
+        total_grade = 0
+        # 根据返回成绩计算数据
+        for sub in sub_list:
+            total_grade += sub
+            if sub < 60:
+                failed_sub_count += 1
+            # if sub >= 60:
+            #     pass_sub_count += 1
+            if 75 >= sub >= 60:
+                fair_sub_count += 1
+            if 85 >= sub >= 75:
+                good_sub_count += 1
+            if sub > 85:
+                excellent_sub_count += 1
+                sub * 4
+        average_grade = round(total_grade / len(sub_list), 1)          # 四舍五入
+        # 总评计算
+        if gpa < 1:
+            evaluation = "不及格"
+        elif 2.5 > gpa >= 1:
+            evaluation = "及格"
+        elif 3.5 > gpa >= 2.5:
+            evaluation = "中等"
+        elif 3.7 > gpa >= 3.5:
+            evaluation = "良好"
+        elif gpa >= 3.7:
+            evaluation = "优秀"
+
+        self.var_num.set(num)
+        self.var_name.set(name)
+        self.var_cla.set(cla)
+        self.var_evaluation.set(evaluation)                     # 总评
+        self.var_failed_sub_count.set(str(failed_sub_count) + " 科")         # 不及格科目数
+        # self.var_pass_sub_count.set(pass_sub_count)             # 及格科目数
+        self.var_fair_sub_count.set(str(fair_sub_count) + " 科")             # 中等科目数
+        self.var_good_sub_count.set(str(good_sub_count) + " 科")             # 良好科目数
+        self.var_excellent_sub_count.set(str(excellent_sub_count) + " 科")   # 优等科目数
+        self.var_gpa.set(gpa)                                   # 绩点
+        self.var_average_grade.set(average_grade)               # 平均成绩
+        self.var_total_grade.set(total_grade)                   # 总成绩
+
+    def cancel(self):
+        '''清空
+        '''
+        self.var_num.set('')
+        self.var_name.set('')
+        self.var_cla.set('')
+        self.var_evaluation.set('')             # 总评
+        self.var_failed_sub_count.set('')       # 不及格科目数
+        # self.var_pass_sub_count.set('')         # 及格科目数
+        self.var_fair_sub_count.set('')         # 中等科目数
+        self.var_good_sub_count.set('')         # 良好科目数
+        self.var_excellent_sub_count.set('')    # 优等科目数
+        self.var_gpa.set('')                    # 绩点
+        self.var_average_grade.set('')          # 平均成绩
+        self.var_total_grade.set('')            # 总成绩
 
 
 class AboutFrame(Frame):
@@ -630,4 +813,11 @@ class AboutFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text='关于界面').grid()
+        Label(self, text="关于", font=24, bg='#00FFFF').grid(row=0, column=0, sticky=N, pady=10)
+        self.about_text = "【使用说明】\n\n1. 此次tkinter实践主要难点在于tkinter本身的页面跳转设计\n\n采用登录进来后子tab页面的设计\n\n2. 优点在于用pandas处理csv数据比较高效简便\n\n3. 涉及的点有学号作为唯一ID，其他数据有空值、非法值校验\n\n4. 查询可先输入姓名查询，若有多个重名，再补充学号即可\n\n5. 在报表功能中有设计对GPA的简单计算"
+        self.var_about = tkinter.StringVar(self, value=self.about_text)
+        Label(self, text="", font=20, justify=LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=W, padx=40, pady=5)
+        # label插入图像 遵循grid布局
+        self.load = Image.open(pic)
+        self.render = ImageTk.PhotoImage(self.load)
+        Label(self, image=self.render).grid(row=1, column=1, sticky=W)

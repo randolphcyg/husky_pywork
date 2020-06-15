@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-13 23:23:47
+@LastEditTime: 2020-06-15 14:06:33
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -44,7 +44,7 @@ class LoginPage(object):
 
         Label(self.page, text="密码:", font=20).grid(row=2, sticky=E, padx=40, pady=15)
         self.var_pwd = tkinter.StringVar(self.page, value='')
-        self.entry_pwd = Entry(self.page, textvariable=self.var_pwd, show='*', width=30)
+        self.entry_pwd = Entry(self.page, textvariable=self.var_pwd, show='●', width=30)
         self.entry_pwd.grid(row=2, column=1, sticky=W)
 
         # 选中时变量值为1，未选中时变量值为0，默认选中
