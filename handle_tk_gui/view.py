@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 16:13:25
+@LastEditTime: 2020-06-15 16:24:08
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -748,10 +748,20 @@ class AboutFrame(Frame):
 
     def createPage(self):
         Label(self, text="关于", font=24, bg='#00FFFF').grid(row=0, column=0, sticky=N, pady=10)
+        # 嵌套区域一
+        self.LF = ttk.LabelFrame(self, text='关于学生信息管理系统')
+        self.LF.grid(column=0, row=0, padx=8, pady=4)
+
         self.about_text = "【使用说明】\n\n1. 此次tkinter实践主要难点在于tkinter本身的页面跳转设计\n\n采用登录进来后子tab页面的设计\n\n2. 优点在于用pandas处理csv数据比较高效简便\n\n3. 涉及的点有学号作为唯一ID，其他数据有空值、非法值校验\n\n4. 查询可先输入姓名查询，若有多个重名，再补充学号即可\n\n5. 在报表功能中有设计对GPA的简单计算"
         self.var_about = tkinter.StringVar(self, value=self.about_text)
-        Label(self, text="", font=20, justify=LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=W, padx=40, pady=5)
+        Label(self.LF, text="", font=20, justify=LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=W, padx=40, pady=5)
         # label插入图像 遵循grid布局
         self.load = Image.open(pic)
         self.render = ImageTk.PhotoImage(self.load)
-        Label(self, image=self.render).grid(row=1, column=1, sticky=W)
+        Label(self.LF, image=self.render).grid(row=1, column=1, sticky=W)
+        # 嵌套区域二
+        labelsFrame = ttk.LabelFrame(self.LF, text=' About Randoph ')
+        labelsFrame.grid(column=0, row=8, columnspan=4)
+
+        ttk.Label(labelsFrame, font=16, text="Minecraft是我的理想").grid(column=0, row=0)
+        ttk.Label(labelsFrame, font=16, text="向往着自由 向往着缤纷浪漫的生活").grid(column=0, row=1, sticky=W)
