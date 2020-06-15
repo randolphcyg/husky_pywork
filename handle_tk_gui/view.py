@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 15:13:10
+@LastEditTime: 2020-06-15 16:13:25
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -13,9 +13,9 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 from tkinter.messagebox import *
-from PIL import Image, ImageTk
 
 import pandas as pd
+from PIL import Image, ImageTk
 
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 temp_file = os.path.join(ROOT_PATH, 'temp.xlsx')
@@ -95,9 +95,9 @@ class InputFrame(Frame):                # 继承Frame类
         self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
-        Button(self, text="保存", font=18, command=self.save).grid(row=6, column=1, sticky=W)
-        Button(self, text="清空", font=18, command=self.cancel).grid(row=6, column=1, sticky=N)
-        Button(self, text="退出", font=18, command=self.quit).grid(row=6, column=1, sticky=E)
+        Button(self, text="保存", font=18, bd=3, bg='#22c9c9', command=self.save).grid(row=6, column=1, sticky=W)
+        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=N)
+        Button(self, text="退出", font=18, bd=3, bg='#FF4500', command=self.quit).grid(row=6, column=1, sticky=E)
 
     def quit(self):
         '''退出程序
@@ -169,7 +169,7 @@ class InputFrame(Frame):                # 继承Frame类
             tkinter.messagebox.showinfo(title="信息", message="学生信息登记保存成功！")
 
     def cancel(self):
-        '''取消
+        '''清空
         '''
         self.var_num.set('')
         self.var_name.set('')
@@ -205,49 +205,39 @@ class DelFrame(Frame):
         # 第二行
         Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
-        self.entry_cla = Entry(self, textvariable=self.var_cla, width=30)
-        self.entry_cla.grid(row=2, column=1, sticky=W, pady=20)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=W, padx=40, pady=5)
 
         Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
-        # 下拉菜单
-        self.cmb = ttk.Combobox(self)
-        self.cmb.grid(row=2, column=3, sticky=W)
-        self.cmb['value'] = ("男", "女")
-        self.cmb.current(0)
+        self.var_gender = tkinter.StringVar(self, value='')
+        self.label_gender = Label(self, text="", font=20, textvariable=self.var_gender).grid(row=2, column=3, sticky=W, padx=40, pady=5)
         # 第三行
         Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
         self.var_sub1 = tkinter.StringVar(self, value='')
-        self.entry_sub1 = Entry(self, textvariable=self.var_sub1, width=30)
-        self.entry_sub1.grid(row=3, column=1, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub1).grid(row=3, column=1, sticky=W, padx=40, pady=5)
 
         Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
         self.var_sub2 = tkinter.StringVar(self, value='')
-        self.entry_sub2 = Entry(self, textvariable=self.var_sub2, width=30)
-        self.entry_sub2.grid(row=3, column=3, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub2).grid(row=3, column=3, sticky=W, padx=40, pady=5)
         # 第四行
         Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
         self.var_sub3 = tkinter.StringVar(self, value='')
-        self.entry_sub3 = Entry(self, textvariable=self.var_sub3, width=30)
-        self.entry_sub3.grid(row=4, column=1, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub3).grid(row=4, column=1, sticky=W, padx=40, pady=5)
 
         Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
         self.var_sub4 = tkinter.StringVar(self, value='')
-        self.entry_sub4 = Entry(self, textvariable=self.var_sub4, width=30)
-        self.entry_sub4.grid(row=4, column=3, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub4).grid(row=4, column=3, sticky=W, padx=40, pady=5)
         # 第五行
         Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
         self.var_sub5 = tkinter.StringVar(self, value='')
-        self.entry_sub5 = Entry(self, textvariable=self.var_sub5, width=30)
-        self.entry_sub5.grid(row=5, column=1, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub5).grid(row=5, column=1, sticky=W, padx=40, pady=5)
 
         Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
         self.var_sub6 = tkinter.StringVar(self, value='')
-        self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
-        self.entry_sub6.grid(row=5, column=3, sticky=W)
+        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub6).grid(row=5, column=3, sticky=W, padx=40, pady=5)
         # 第六行
-        Button(self, text="查询", font=18, command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="删除", font=18, command=self.delete).grid(row=6, column=1, sticky=N)
-        Button(self, text="取消", font=18, command=self.cancel).grid(row=6, column=1, sticky=E)
+        Button(self, text="查询", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=6, column=1, sticky=W)
+        Button(self, text="删除", font=18, bd=3, bg='#FFC0CB', command=self.delete).grid(row=6, column=1, sticky=N)
+        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
 
     def fetch(self):
         '''先查询出信息，再去删除
@@ -255,39 +245,16 @@ class DelFrame(Frame):
         '''
         num = self.var_num.get()
         name = self.var_name.get()        # 先不根据名字搜索，如果有重名情况，则提示需要输入学号辅助判断
-
+        self.cancel()
         if num and name:
             num = int(num)          # 注意输入的学号都要转成int类型才能用
-            # 每次查询先清空除去所输入内容的其他内容
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_num.set(num)
+            self.var_name.set(name)
         elif num:
             num = int(num)
-            self.var_name.set('')
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_num.set(num)
         elif name:
-            self.var_num.set('')
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_name.set(name)
 
         df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
         row, col = df.shape
@@ -295,21 +262,20 @@ class DelFrame(Frame):
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
         name_exist_time = names_list.count(name)        # 姓名出现的次数：0次没有此人，1次仅有一个，1个以上需学号查询
 
-        if num:       # 有学号用学号查询
+        if name:            # 先根据姓名查询
+            if name_exist_time == 0:
+                tkinter.messagebox.showinfo(title="警告", message="查无此人！")
+            elif name_exist_time == 1:
+                tar_row = names_list.index(name)
+                fetch_data_list = df.loc[tar_row].tolist()
+                self.fill_table(fetch_data_list)
+            elif name_exist_time != 1:
+                tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
+        elif num:           # 再根据学号查
             if num in nums_list:
                 tar_row = nums_list.index(num)
                 fetch_data_list = df.loc[tar_row].tolist()
                 self.fill_table(fetch_data_list)
-        else:
-            if name:        # 没有学号根据姓名查询，姓名重复则提示需要学号辅助判断
-                if name_exist_time == 0:
-                    tkinter.messagebox.showinfo(title="警告", message="查无此人！")
-                elif name_exist_time == 1:
-                    tar_row = names_list.index(name)
-                    fetch_data_list = df.loc[tar_row].tolist()
-                    self.fill_table(fetch_data_list)
-                elif name_exist_time != 1:
-                    tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
 
     def fill_table(self, data_list):
         '''将查询值塞回界面
@@ -318,10 +284,7 @@ class DelFrame(Frame):
         self.var_num.set(num)
         self.var_name.set(name)
         self.var_cla.set(cla)
-        if gender == "男":
-            self.cmb.current(0)
-        else:
-            self.cmb.current(1)
+        self.var_gender.set(gender)
         self.var_sub1.set(sub1)
         self.var_sub2.set(sub2)
         self.var_sub3.set(sub3)
@@ -344,13 +307,7 @@ class DelFrame(Frame):
         cla = self.var_cla.get()        # 用班级信息去判断是否fetch到信息
         if cla:
             num = self.var_num.get()
-            if num:                     # 有学号直接用学号判断此人信息在表格中的行数
-                num = int(num)
-                if num in nums_list:
-                    tar_row = nums_list.index(num)
-                    df.drop(tar_row, inplace=True)              # 删除相应行
-                    self.update_csv_file(df)                    # 更新csv文件
-            elif name:                       # 没有学号根据姓名查询，姓名重复则提示需要学号辅助判断
+            if name:            # 先根据姓名查询
                 if name_exist_time == 0:
                     tkinter.messagebox.showinfo(title="警告", message="查无此人！")
                 elif name_exist_time == 1:
@@ -359,6 +316,11 @@ class DelFrame(Frame):
                     self.update_csv_file(df)                    # 更新csv文件
                 elif name_exist_time != 1:
                     tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
+            elif num:           # 再根据学号查
+                if num in nums_list:
+                    tar_row = nums_list.index(num)
+                    df.drop(tar_row, inplace=True)              # 删除相应行
+                    self.update_csv_file(df)                    # 更新csv文件
         else:
             tkinter.messagebox.showinfo(title="提示", message="未查询到此人信息！请先检查学号姓名并点击【查询】按钮核实信息")
         pass
@@ -379,12 +341,12 @@ class DelFrame(Frame):
             pass
 
     def cancel(self):
-        '''取消
+        '''清空
         '''
         self.var_num.set('')
         self.var_name.set('')
         self.var_cla.set('')
-        self.cmb.current(0)     # 下拉框恢复
+        self.var_gender.set('')
         self.var_sub1.set('')
         self.var_sub2.set('')
         self.var_sub3.set('')
@@ -455,9 +417,9 @@ class UpdateFrame(Frame):
         self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
-        Button(self, text="查询", font=18, command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="保存", font=18, command=self.update).grid(row=6, column=1, sticky=N)
-        Button(self, text="取消", font=18, command=self.cancel).grid(row=6, column=1, sticky=E)
+        Button(self, text="查询", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=6, column=1, sticky=W)
+        Button(self, text="保存", font=18, bd=3, bg='#4682B4', command=self.update).grid(row=6, column=1, sticky=N)
+        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
 
     def fetch(self):
         '''先查询出信息，再去修改
@@ -466,37 +428,16 @@ class UpdateFrame(Frame):
         num = self.var_num.get()
         name = self.var_name.get()        # 先不根据名字搜索，如果有重名情况，则提示需要输入学号辅助判断
 
+        self.cancel()
         if num and name:
             num = int(num)          # 注意输入的学号都要转成int类型才能用
-            # 每次查询先清空除去所输入内容的其他内容
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_num.set(num)
+            self.var_name.set(name)
         elif num:
             num = int(num)
-            self.var_name.set('')
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_num.set(num)
         elif name:
-            self.var_cla.set('')
-            self.cmb.current(0)     # 下拉框恢复
-            self.var_sub1.set('')
-            self.var_sub2.set('')
-            self.var_sub3.set('')
-            self.var_sub4.set('')
-            self.var_sub5.set('')
-            self.var_sub6.set('')
+            self.var_name.set(name)
 
         df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
         row, col = df.shape
@@ -504,21 +445,20 @@ class UpdateFrame(Frame):
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
         name_exist_time = names_list.count(name)        # 姓名出现的次数：0次没有此人，1次仅有一个，1个以上需学号查询
 
-        if num:       # 有学号用学号查询
+        if name:            # 先根据姓名查询
+            if name_exist_time == 0:
+                tkinter.messagebox.showinfo(title="警告", message="查无此人！")
+            elif name_exist_time == 1:
+                tar_row = names_list.index(name)
+                fetch_data_list = df.loc[tar_row].tolist()
+                self.fill_table(fetch_data_list)
+            elif name_exist_time != 1:
+                tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
+        elif num:           # 再根据学号查
             if num in nums_list:
                 tar_row = nums_list.index(num)
                 fetch_data_list = df.loc[tar_row].tolist()
                 self.fill_table(fetch_data_list)
-        else:
-            if name:        # 没有学号根据姓名查询，姓名重复则提示需要学号辅助判断
-                if name_exist_time == 0:
-                    tkinter.messagebox.showinfo(title="警告", message="查无此人！")
-                elif name_exist_time == 1:
-                    tar_row = names_list.index(name)
-                    fetch_data_list = df.loc[tar_row].tolist()
-                    self.fill_table(fetch_data_list)
-                elif name_exist_time != 1:
-                    tkinter.messagebox.showinfo(title="提示", message="存在重名！请输入学号辅助判断")
 
     def fill_table(self, data_list):
         '''将查询值塞回界面
@@ -539,6 +479,8 @@ class UpdateFrame(Frame):
         self.var_sub6.set(sub6)
 
     def is_number(self, num):
+        '''正则判断是否为数字串
+        '''
         pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
         result = pattern.match(num)
         if result:
@@ -607,7 +549,7 @@ class UpdateFrame(Frame):
                 pass
 
     def cancel(self):
-        '''取消
+        '''清空
         '''
         self.var_num.set('')
         self.var_name.set('')
@@ -652,9 +594,6 @@ class CountFrame(Frame):
         self.var_failed_sub_count = tkinter.StringVar(self, value='')
         self.label_failed_sub_count = Label(self, text="", font=20, textvariable=self.var_failed_sub_count).grid(row=3, column=1, sticky=W, padx=40, pady=5)
 
-        # Label(self, text="及格:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
-        # self.var_pass_sub_count = tkinter.StringVar(self, value='')
-        # self.label_pass_sub_count = Label(self, text="", font=20, textvariable=self.var_pass_sub_count).grid(row=3, column=3, sticky=W, padx=40, pady=5)
         # 第四行
         Label(self, text="中等:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
         self.var_fair_sub_count = tkinter.StringVar(self, value='')
@@ -682,8 +621,8 @@ class CountFrame(Frame):
         self.label_total_grade = Label(self, text="", font=20, textvariable=self.var_total_grade).grid(row=6, column=3, sticky=W, padx=40, pady=5)
 
         # 第七行
-        Button(self, text="查询报表", font=18, command=self.fetch).grid(row=7, column=1, sticky=W)
-        Button(self, text="清空", font=18, command=self.cancel).grid(row=7, column=1, sticky=E)
+        Button(self, text="查询报表", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=7, column=1, sticky=W)
+        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=7, column=1, sticky=E)
 
     def fetch(self):
         '''根据学号或姓名查询并返回成绩报表
@@ -741,7 +680,6 @@ class CountFrame(Frame):
         num, name, cla, gender, sub1, sub2, sub3, sub4, sub5, sub6 = data_list
         sub_list = [sub1, sub2, sub3, sub4, sub5, sub6]
         failed_sub_count = 0
-        # pass_sub_count = 0
         fair_sub_count = 0
         good_sub_count = 0
         excellent_sub_count = 0
@@ -754,8 +692,6 @@ class CountFrame(Frame):
             total_grade += sub
             if sub < 60:
                 failed_sub_count += 1
-            # if sub >= 60:
-            #     pass_sub_count += 1
             if 75 >= sub >= 60:
                 fair_sub_count += 1
             if 85 >= sub >= 75:
@@ -779,15 +715,14 @@ class CountFrame(Frame):
         self.var_num.set(num)
         self.var_name.set(name)
         self.var_cla.set(cla)
-        self.var_evaluation.set(evaluation)                     # 总评
-        self.var_failed_sub_count.set(str(failed_sub_count) + " 科")         # 不及格科目数
-        # self.var_pass_sub_count.set(pass_sub_count)             # 及格科目数
-        self.var_fair_sub_count.set(str(fair_sub_count) + " 科")             # 中等科目数
-        self.var_good_sub_count.set(str(good_sub_count) + " 科")             # 良好科目数
-        self.var_excellent_sub_count.set(str(excellent_sub_count) + " 科")   # 优等科目数
-        self.var_gpa.set(gpa)                                   # 绩点
-        self.var_average_grade.set(average_grade)               # 平均成绩
-        self.var_total_grade.set(total_grade)                   # 总成绩
+        self.var_evaluation.set(evaluation)                                 # 总评
+        self.var_failed_sub_count.set(str(failed_sub_count) + " 科")        # 不及格科目数
+        self.var_fair_sub_count.set(str(fair_sub_count) + " 科")            # 中等科目数
+        self.var_good_sub_count.set(str(good_sub_count) + " 科")            # 良好科目数
+        self.var_excellent_sub_count.set(str(excellent_sub_count) + " 科")  # 优等科目数
+        self.var_gpa.set(gpa)                                               # 绩点
+        self.var_average_grade.set(average_grade)                           # 平均成绩
+        self.var_total_grade.set(total_grade)                               # 总成绩
 
     def cancel(self):
         '''清空
@@ -797,7 +732,6 @@ class CountFrame(Frame):
         self.var_cla.set('')
         self.var_evaluation.set('')             # 总评
         self.var_failed_sub_count.set('')       # 不及格科目数
-        # self.var_pass_sub_count.set('')         # 及格科目数
         self.var_fair_sub_count.set('')         # 中等科目数
         self.var_good_sub_count.set('')         # 良好科目数
         self.var_excellent_sub_count.set('')    # 优等科目数

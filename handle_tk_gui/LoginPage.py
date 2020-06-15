@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 14:06:33
+@LastEditTime: 2020-06-15 15:39:14
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -52,9 +52,9 @@ class LoginPage(object):
         self.check_remember = tkinter.Checkbutton(self.page, text="记住我？", variable=self.remember, onvalue=1, offvalue=0, font=20)
         self.check_remember.grid(row=4, column=1, sticky=W)
 
-        Button(self.page, text="登录", font=18, command=self.login).grid(row=5, column=1, sticky=W)
-        Button(self.page, text="取消", font=18, command=self.cancel).grid(row=5, column=1, sticky=N)
-        Button(self.page, text="退出", font=18, command=self.quit).grid(row=5, column=1, sticky=E)
+        Button(self.page, text="登录", font=18, bd=3, bg='#7FFFD4', command=self.login).grid(row=5, column=1, sticky=W)
+        Button(self.page, text="取消", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=5, column=1, sticky=N)
+        Button(self.page, text="退出", font=18, bd=3, bg='#FF4500', command=self.quit).grid(row=5, column=1, sticky=E)
 
     def auto_fill_pwd(self):
         '''自动填写用户名密码
