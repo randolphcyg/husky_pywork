@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 15:39:14
+@LastEditTime: 2020-06-15 16:39:49
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -24,7 +24,7 @@ class LoginPage(object):
     def __init__(self, master=None):
         self.root = master  # 定义内部变量root
         # 窗口标题
-        self.root.title("学生成绩管理系统登录页面")
+        self.root.title("学生成绩管理系统")
         # 窗口大小
         width, height = 390, 300
         self.root.geometry('%dx%d+%d+%d' % (width, height, (self.root.winfo_screenwidth() - width) / 2, (self.root.winfo_screenheight() - height) / 2))
