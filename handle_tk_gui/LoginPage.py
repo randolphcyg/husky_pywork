@@ -2,10 +2,10 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 12:51:53
+@LastEditTime: 2020-06-16 16:09:13
 @version: 1.0
 @Contact: cyg0504@outlook.com
-@Descripttion:
+@Descripttion: 学生信息管理系统登录页面
 '''
 import os
 import tkinter as tk
@@ -13,7 +13,7 @@ import tkinter.font as tkf
 import tkinter.messagebox
 import tkinter.ttk as ttk
 
-from MainPage import *
+from MainPage import MainPage
 
 path = os.getenv('temp')
 filename = os.path.join(path, 'pwd.txt')

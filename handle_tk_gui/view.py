@@ -2,17 +2,18 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 18:08:00
+@LastEditTime: 2020-06-16 16:11:04
 @version: 1.0
 @Contact: cyg0504@outlook.com
-@Descripttion:
+@Descripttion: 学生信息管理系统各功能页面 TODO:页面需要优化
 '''
 import os
-import os.path
-import tkinter
-from tkinter import *
-from tkinter import ttk
-from tkinter.messagebox import *
+import re
+import tkinter as tk
+import tkinter.font as tkf
+import tkinter.messagebox
+import tkinter.ttk as ttk
+from tkinter import Frame       # Frame
 
 import pandas as pd
 from PIL import Image, ImageTk
@@ -26,11 +27,12 @@ pic = os.path.join(ROOT_PATH, 'randolph.jpg')
 class InputFrame(Frame):                # 继承Frame类
     def __init__(self, master=None):
         Frame.__init__(self, master)
+        super().__init__(master)
         self.root = master              # 定义内部变量root
-        self.itemName = StringVar()
-        self.importPrice = StringVar()
-        self.sellPrice = StringVar()
-        self.deductPrice = StringVar()
+        self.itemName = tk.StringVar()
+        self.importPrice = tk.StringVar()
+        self.sellPrice = tk.StringVar()
+        self.deductPrice = tk.StringVar()
         self.createPage()
 
     def createPage(self):
@@ -41,63 +43,63 @@ class InputFrame(Frame):                # 继承Frame类
                                        "线性代数", "大学英语", "Python开发", "大学体育"])
             df.to_excel(output_file, encoding='utf-8', sheet_name="学生信息", index=False)
         
-        Label(self, text="信息录入页面", font=("微软雅黑", 16), cursor='mouse', bg = '#FF00FF').grid(sticky=tkinter.E+tkinter.W, pady=20, columnspan=4)
+        tk.Label(self, text="信息录入页面", font=("微软雅黑", 16), cursor='mouse', bg = '#FF00FF').grid(sticky=tkinter.E+tkinter.W, pady=20, columnspan=4)
         # 第一行
-        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
-        self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=1, sticky=W)
+        self.entry_name = tk.Entry(self, textvariable=self.var_name, width=30)
+        self.entry_name.grid(row=1, column=1, sticky=tk.W)
 
-        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
+        self.entry_num = tk.Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=tk.W, pady=20)
         # 第二行
-        Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
-        self.entry_cla = Entry(self, textvariable=self.var_cla, width=30)
-        self.entry_cla.grid(row=2, column=1, sticky=W, pady=20)
+        self.entry_cla = tk.Entry(self, textvariable=self.var_cla, width=30)
+        self.entry_cla.grid(row=2, column=1, sticky=tk.W, pady=20)
 
-        Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=tk.E, padx=40, pady=5)
         # 下拉菜单
         self.cmb = ttk.Combobox(self, width=3)
-        self.cmb.grid(row=2, column=3, sticky=W)
+        self.cmb.grid(row=2, column=3, sticky=tk.W)
         self.cmb['value'] = ("男", "女")
         self.cmb.current(0)
         # 第三行
-        Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub1 = tkinter.StringVar(self, value='')
-        self.entry_sub1 = Entry(self, textvariable=self.var_sub1, width=30)
-        self.entry_sub1.grid(row=3, column=1, sticky=W)
+        self.entry_sub1 = tk.Entry(self, textvariable=self.var_sub1, width=30)
+        self.entry_sub1.grid(row=3, column=1, sticky=tk.W)
 
-        Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub2 = tkinter.StringVar(self, value='')
-        self.entry_sub2 = Entry(self, textvariable=self.var_sub2, width=30)
-        self.entry_sub2.grid(row=3, column=3, sticky=W)
+        self.entry_sub2 = tk.Entry(self, textvariable=self.var_sub2, width=30)
+        self.entry_sub2.grid(row=3, column=3, sticky=tk.W)
         # 第四行
-        Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub3 = tkinter.StringVar(self, value='')
-        self.entry_sub3 = Entry(self, textvariable=self.var_sub3, width=30)
-        self.entry_sub3.grid(row=4, column=1, sticky=W)
+        self.entry_sub3 = tk.Entry(self, textvariable=self.var_sub3, width=30)
+        self.entry_sub3.grid(row=4, column=1, sticky=tk.W)
 
-        Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub4 = tkinter.StringVar(self, value='')
-        self.entry_sub4 = Entry(self, textvariable=self.var_sub4, width=30)
-        self.entry_sub4.grid(row=4, column=3, sticky=W)
+        self.entry_sub4 = tk.Entry(self, textvariable=self.var_sub4, width=30)
+        self.entry_sub4.grid(row=4, column=3, sticky=tk.W)
         # 第五行
-        Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub5 = tkinter.StringVar(self, value='')
-        self.entry_sub5 = Entry(self, textvariable=self.var_sub5, width=30)
-        self.entry_sub5.grid(row=5, column=1, sticky=W)
+        self.entry_sub5 = tk.Entry(self, textvariable=self.var_sub5, width=30)
+        self.entry_sub5.grid(row=5, column=1, sticky=tk.W)
 
-        Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub6 = tkinter.StringVar(self, value='')
-        self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
-        self.entry_sub6.grid(row=5, column=3, sticky=W)
+        self.entry_sub6 = tk.Entry(self, textvariable=self.var_sub6, width=30)
+        self.entry_sub6.grid(row=5, column=3, sticky=tk.W)
         # 第六行
-        Button(self, text="保存", font=18, bd=3, bg='#87CEFA', command=self.save).grid(row=6, column=1, sticky=W)
-        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=N)
-        Button(self, text="退出", font=18, bd=3, bg='#F4A460', command=self.quit).grid(row=6, column=1, sticky=E)
+        tk.Button(self, text="保存", font=18, bd=3, bg='#87CEFA', command=self.save).grid(row=6, column=1, sticky=tk.W)
+        tk.Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=tk.N)
+        tk.Button(self, text="退出", font=18, bd=3, bg='#F4A460', command=self.quit).grid(row=6, column=1, sticky=tk.E)
 
     def quit(self):
         '''退出程序
@@ -187,57 +189,57 @@ class DelFrame(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.root = master
-        self.itemName = StringVar()
+        self.itemName = tk.StringVar()
         self.createPage()
 
     def createPage(self):
-        Label(self, text="信息查询删除页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=N, pady=10)
+        tk.Label(self, text="信息查询删除页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=tk.N, pady=10)
         # 第一行
-        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
-        self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=1, sticky=W)
+        self.entry_name = tk.Entry(self, textvariable=self.var_name, width=30)
+        self.entry_name.grid(row=1, column=1, sticky=tk.W)
 
-        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
+        self.entry_num = tk.Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=tk.W, pady=20)
         # 第二行
-        Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_gender = tkinter.StringVar(self, value='')
-        self.label_gender = Label(self, text="", font=20, textvariable=self.var_gender).grid(row=2, column=3, sticky=W, padx=40, pady=5)
+        self.label_gender = tk.Label(self, text="", font=20, textvariable=self.var_gender).grid(row=2, column=3, sticky=tk.W, padx=40, pady=5)
         # 第三行
-        Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub1 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub1).grid(row=3, column=1, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub1).grid(row=3, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub2 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub2).grid(row=3, column=3, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub2).grid(row=3, column=3, sticky=tk.W, padx=40, pady=5)
         # 第四行
-        Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub3 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub3).grid(row=4, column=1, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub3).grid(row=4, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub4 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub4).grid(row=4, column=3, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub4).grid(row=4, column=3, sticky=tk.W, padx=40, pady=5)
         # 第五行
-        Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub5 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub5).grid(row=5, column=1, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub5).grid(row=5, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub6 = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub6).grid(row=5, column=3, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_sub6).grid(row=5, column=3, sticky=tk.W, padx=40, pady=5)
         # 第六行
-        Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="删除", font=18, bd=3, bg='#FFC0CB', command=self.delete).grid(row=6, column=1, sticky=N)
-        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
+        tk.Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=tk.W)
+        tk.Button(self, text="删除", font=18, bd=3, bg='#FFC0CB', command=self.delete).grid(row=6, column=1, sticky=tk.N)
+        tk.Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=tk.E)
 
     def fetch(self):
         '''先查询出信息，再去删除
@@ -359,67 +361,67 @@ class UpdateFrame(Frame):
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.root = master
-        self.itemName = StringVar()
+        self.itemName = tk.StringVar()
         self.createPage()
 
     def createPage(self):
-        Label(self, text="信息查询修改页面", font=("微软雅黑", 16), cursor='circle').grid(row=0, column=1, sticky=N, pady=10)
+        tk.Label(self, text="信息查询修改页面", font=("微软雅黑", 16), cursor='circle').grid(row=0, column=1, sticky=tk.N, pady=10)
         # 第一行
-        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
-        self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=1, sticky=W)
+        self.entry_name = tk.Entry(self, textvariable=self.var_name, width=30)
+        self.entry_name.grid(row=1, column=1, sticky=tk.W)
 
-        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
+        self.entry_num = tk.Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=tk.W, pady=20)
         # 第二行
-        Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
-        self.entry_cla = Entry(self, textvariable=self.var_cla, width=30)
-        self.entry_cla.grid(row=2, column=1, sticky=W, pady=20)
+        self.entry_cla = tk.Entry(self, textvariable=self.var_cla, width=30)
+        self.entry_cla.grid(row=2, column=1, sticky=tk.W, pady=20)
 
-        Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=tk.E, padx=40, pady=5)
         # 下拉菜单
         self.cmb = ttk.Combobox(self, width=3)
-        self.cmb.grid(row=2, column=3, sticky=W)
+        self.cmb.grid(row=2, column=3, sticky=tk.W)
         self.cmb['value'] = ("男", "女")
         self.cmb.current(0)
         # 第三行
-        Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学语文:", font=20).grid(row=3, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub1 = tkinter.StringVar(self, value='')
-        self.entry_sub1 = Entry(self, textvariable=self.var_sub1, width=30)
-        self.entry_sub1.grid(row=3, column=1, sticky=W)
+        self.entry_sub1 = tk.Entry(self, textvariable=self.var_sub1, width=30)
+        self.entry_sub1.grid(row=3, column=1, sticky=tk.W)
 
-        Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="高等数学:", font=20).grid(row=3, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub2 = tkinter.StringVar(self, value='')
-        self.entry_sub2 = Entry(self, textvariable=self.var_sub2, width=30)
-        self.entry_sub2.grid(row=3, column=3, sticky=W)
+        self.entry_sub2 = tk.Entry(self, textvariable=self.var_sub2, width=30)
+        self.entry_sub2.grid(row=3, column=3, sticky=tk.W)
         # 第四行
-        Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="线性代数:", font=20).grid(row=4, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub3 = tkinter.StringVar(self, value='')
-        self.entry_sub3 = Entry(self, textvariable=self.var_sub3, width=30)
-        self.entry_sub3.grid(row=4, column=1, sticky=W)
+        self.entry_sub3 = tk.Entry(self, textvariable=self.var_sub3, width=30)
+        self.entry_sub3.grid(row=4, column=1, sticky=tk.W)
 
-        Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学英语:", font=20).grid(row=4, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub4 = tkinter.StringVar(self, value='')
-        self.entry_sub4 = Entry(self, textvariable=self.var_sub4, width=30)
-        self.entry_sub4.grid(row=4, column=3, sticky=W)
+        self.entry_sub4 = tk.Entry(self, textvariable=self.var_sub4, width=30)
+        self.entry_sub4.grid(row=4, column=3, sticky=tk.W)
         # 第五行
-        Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="Python开发:", font=20).grid(row=5, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_sub5 = tkinter.StringVar(self, value='')
-        self.entry_sub5 = Entry(self, textvariable=self.var_sub5, width=30)
-        self.entry_sub5.grid(row=5, column=1, sticky=W)
+        self.entry_sub5 = tk.Entry(self, textvariable=self.var_sub5, width=30)
+        self.entry_sub5.grid(row=5, column=1, sticky=tk.W)
 
-        Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="大学体育:", font=20).grid(row=5, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_sub6 = tkinter.StringVar(self, value='')
-        self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
-        self.entry_sub6.grid(row=5, column=3, sticky=W)
+        self.entry_sub6 = tk.Entry(self, textvariable=self.var_sub6, width=30)
+        self.entry_sub6.grid(row=5, column=3, sticky=tk.W)
         # 第六行
-        Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=W)
-        Button(self, text="保存", font=18, bd=3, bg='#4682B4', command=self.update).grid(row=6, column=1, sticky=N)
-        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
+        tk.Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=tk.W)
+        tk.Button(self, text="保存", font=18, bd=3, bg='#4682B4', command=self.update).grid(row=6, column=1, sticky=tk.N)
+        tk.Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=tk.E)
 
     def fetch(self):
         '''先查询出信息，再去修改
@@ -570,59 +572,59 @@ class CountFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="学生信息报表页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=N, pady=10)
+        tk.Label(self, text="学生信息报表页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=tk.N, pady=10)
         # 第一行
-        Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
-        self.entry_name = Entry(self, textvariable=self.var_name, width=30)
-        self.entry_name.grid(row=1, column=1, sticky=W)
+        self.entry_name = tk.Entry(self, textvariable=self.var_name, width=30)
+        self.entry_name.grid(row=1, column=1, sticky=tk.W)
 
-        Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="学号:", font=20).grid(row=1, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_num = tkinter.StringVar(self, value='')
-        self.entry_num = Entry(self, textvariable=self.var_num, width=30)
-        self.entry_num.grid(row=1, column=3, sticky=W, pady=20)
+        self.entry_num = tk.Entry(self, textvariable=self.var_num, width=30)
+        self.entry_num.grid(row=1, column=3, sticky=tk.W, pady=20)
         # 第二行
-        Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="班级:", font=20).grid(row=2, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_cla = tkinter.StringVar(self, value='')
-        self.label_cla = Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=W, padx=40, pady=5)
+        self.label_cla = tk.Label(self, text="", font=20, textvariable=self.var_cla).grid(row=2, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="总评:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="总评:", font=20).grid(row=2, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_evaluation = tkinter.StringVar(self, value='')
-        self.label_evaluation = Label(self, text="", font=20, textvariable=self.var_evaluation).grid(row=2, column=3, sticky=W, padx=40, pady=5)
+        self.label_evaluation = tk.Label(self, text="", font=20, textvariable=self.var_evaluation).grid(row=2, column=3, sticky=tk.W, padx=40, pady=5)
         # 第三行
-        Label(self, text="不及格:", font=20).grid(row=3, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="不及格:", font=20).grid(row=3, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_failed_sub_count = tkinter.StringVar(self, value='')
-        self.label_failed_sub_count = Label(self, text="", font=20, textvariable=self.var_failed_sub_count).grid(row=3, column=1, sticky=W, padx=40, pady=5)
+        self.label_failed_sub_count = tk.Label(self, text="", font=20, textvariable=self.var_failed_sub_count).grid(row=3, column=1, sticky=tk.W, padx=40, pady=5)
 
         # 第四行
-        Label(self, text="中等:", font=20).grid(row=4, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="中等:", font=20).grid(row=4, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_fair_sub_count = tkinter.StringVar(self, value='')
-        self.label_fair_sub_count = Label(self, text="", font=20, textvariable=self.var_fair_sub_count).grid(row=4, column=1, sticky=W, padx=40, pady=5)
+        self.label_fair_sub_count = tk.Label(self, text="", font=20, textvariable=self.var_fair_sub_count).grid(row=4, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="良好:", font=20).grid(row=4, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="良好:", font=20).grid(row=4, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_good_sub_count = tkinter.StringVar(self, value='')
-        self.label_good_sub_count = Label(self, text="", font=20, textvariable=self.var_good_sub_count).grid(row=4, column=3, sticky=W, padx=40, pady=5)
+        self.label_good_sub_count = tk.Label(self, text="", font=20, textvariable=self.var_good_sub_count).grid(row=4, column=3, sticky=tk.W, padx=40, pady=5)
         # 第五行
-        Label(self, text="优秀:", font=20).grid(row=5, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="优秀:", font=20).grid(row=5, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_excellent_sub_count = tkinter.StringVar(self, value='')
-        self.label_excellent_sub_count = Label(self, text="", font=20, textvariable=self.var_excellent_sub_count).grid(row=5, column=1, sticky=W, padx=40, pady=5)
+        self.label_excellent_sub_count = tk.Label(self, text="", font=20, textvariable=self.var_excellent_sub_count).grid(row=5, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="绩点:", font=20).grid(row=5, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="绩点:", font=20).grid(row=5, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_gpa = tkinter.StringVar(self, value='')
-        self.label_gpa = Label(self, text="", font=20, textvariable=self.var_gpa).grid(row=5, column=3, sticky=W, padx=40, pady=5)
+        self.label_gpa = tk.Label(self, text="", font=20, textvariable=self.var_gpa).grid(row=5, column=3, sticky=tk.W, padx=40, pady=5)
 
         # 第六行
-        Label(self, text="平均成绩:", font=20).grid(row=6, column=0, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="平均成绩:", font=20).grid(row=6, column=0, sticky=tk.E, padx=40, pady=5)
         self.var_average_grade = tkinter.StringVar(self, value='')
-        self.label_average_grade = Label(self, text="", font=20, textvariable=self.var_average_grade).grid(row=6, column=1, sticky=W, padx=40, pady=5)
+        self.label_average_grade = tk.Label(self, text="", font=20, textvariable=self.var_average_grade).grid(row=6, column=1, sticky=tk.W, padx=40, pady=5)
 
-        Label(self, text="总成绩:", font=20).grid(row=6, column=2, sticky=E, padx=40, pady=5)
+        tk.Label(self, text="总成绩:", font=20).grid(row=6, column=2, sticky=tk.E, padx=40, pady=5)
         self.var_total_grade = tkinter.StringVar(self, value='')
-        self.label_total_grade = Label(self, text="", font=20, textvariable=self.var_total_grade).grid(row=6, column=3, sticky=W, padx=40, pady=5)
+        self.label_total_grade = tk.Label(self, text="", font=20, textvariable=self.var_total_grade).grid(row=6, column=3, sticky=tk.W, padx=40, pady=5)
 
         # 第七行
-        Button(self, text="查询报表", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=7, column=1, sticky=W)
-        Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=7, column=1, sticky=E)
+        tk.Button(self, text="查询报表", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=7, column=1, sticky=tk.W)
+        tk.Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=7, column=1, sticky=tk.E)
 
     def fetch(self):
         '''根据学号或姓名查询并返回成绩报表
@@ -754,14 +756,14 @@ class AboutFrame(Frame):
 
         self.about_text = "【使用说明】\n\n1. 此次tkinter实践主要难点在于tkinter本身的页面跳转设计\n\n采用登录进来后子tab页面的设计\n\n2. 优点在于用pandas处理csv数据比较高效简便\n\n3. 涉及的点有学号作为唯一ID，其他数据有空值、非法值校验\n\n4. 查询可先输入姓名查询，若有多个重名，再补充学号即可\n\n5. 在报表功能中有设计对GPA的简单计算"
         self.var_about = tkinter.StringVar(self, value=self.about_text)
-        Label(self.LF, text="", font=20, justify=LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=W, padx=40, pady=5)
+        tk.Label(self.LF, text="", font=20, justify=tk.LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=tk.W, padx=40, pady=5)
         # label插入图像 遵循grid布局
         self.load = Image.open(pic)
         self.render = ImageTk.PhotoImage(self.load)
-        Label(self.LF, image=self.render).grid(row=1, column=1, sticky=W)
+        tk.Label(self.LF, image=self.render).grid(row=1, column=1, sticky=tk.W)
         # 嵌套区域二
         labelsFrame = ttk.LabelFrame(self.LF, text=' About Randoph ')
         labelsFrame.grid(column=0, row=8, columnspan=4)
 
-        ttk.Label(labelsFrame, font=16, text="Minecraft是我的理想").grid(column=0, row=0)
-        ttk.Label(labelsFrame, font=16, text="向往着自由 向往着缤纷浪漫的生活").grid(column=0, row=1, sticky=W)
+        tk.Label(labelsFrame, font=16, text="Minecraft是我的理想").grid(column=0, row=0)
+        tk.Label(labelsFrame, font=16, text="向往着自由 向往着缤纷浪漫的生活").grid(column=0, row=1, sticky=tk.W)

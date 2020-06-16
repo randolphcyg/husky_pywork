@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-16 00:27:35
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 12:21:16
+@LastEditTime: 2020-06-16 13:26:07
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -19,41 +19,41 @@ class MForm(tk.Frame):
         super().__init__(master)
         self.initComponent(master)
 
-    # def initMenu(self, master):
-    #     mbar = tk.Menu(master)						# 定义顶级菜单实例
-    #     fmenu = tk.Menu(mbar, tearoff=False)		# 在顶级菜单下创建菜单项
-    #     mbar.add_cascade(label=' 文件 ', menu=fmenu, font=('Times', 20, 'bold'))  # 添加子菜单
-    #     fmenu.add_command(label="打开", command=self.menu_click_event)
-    #     fmenu.add_command(label="保存", command=self.menu_click_event)
-    #     fmenu.add_separator()						# 添加分割线
-    #     fmenu.add_command(label="退出", command=master.quit())
+    def initMenu(self, master):
+        mbar = tk.Menu(master)						# 定义顶级菜单实例
+        fmenu = tk.Menu(mbar, tearoff=False)		# 在顶级菜单下创建菜单项
+        mbar.add_cascade(label=' 文件 ', menu=fmenu, font=('Times', 20, 'bold'))  # 添加子菜单
+        fmenu.add_command(label="打开", command=self.menu_click_event)
+        fmenu.add_command(label="保存", command=self.menu_click_event)
+        fmenu.add_separator()						# 添加分割线
+        fmenu.add_command(label="退出", command=master.quit())
 
-    #     etmenu = tk.Menu(mbar, tearoff=False)
-    #     mbar.add_cascade(label=' 编辑 ', menu=etmenu)
-    #     for each in ['复制', '剪切', '合并']:
-    #         etmenu.add_command(label=each, command=self.menu_click_event)
-    #         master.config(menu=mbar)				# 将顶级菜单注册到窗体
+        etmenu = tk.Menu(mbar, tearoff=False)
+        mbar.add_cascade(label=' 编辑 ', menu=etmenu)
+        for each in ['复制', '剪切', '合并']:
+            etmenu.add_command(label=each, command=self.menu_click_event)
+            master.config(menu=mbar)				# 将顶级菜单注册到窗体
 
-    # def menu_click_event(self):
-    #     '''菜单事件'''
-    #     pass
+    def menu_click_event(self):
+        '''菜单事件'''
+        pass
 
-    # def initPlayList(self):
-    #     '''初始化树状视图'''
-    #     self.frm_left.rowconfigure(0, weight=1)			# 左侧Frame帧行列权重配置以便子元素填充布局                 
-    #     self.frm_left.columnconfigure(0, weight=1)		# 左侧Frame帧中添加树状视图
-    #     tree = ttk.Treeview(self.frm_left, selectmode='browse', show='tree', padding=[0, 0, 0, 0])
-    #     tree.grid(row=0, column=0, sticky=tk.NSEW)		# 树状视图填充左侧Frame帧
-    #     tree.column('#0', width=150)					# 设置图标列的宽度，视图的宽度由所有列的宽决定
-    #     # 一级节点parent='',index=第几个节点,iid=None则自动生成并返回，text为图标右侧显示文字
-    #     # values值与columns给定的值对应
-    #     tr_root = tree.insert("", 0, None, open=True, text='播放列表')  # 树视图添加根节点
-    #     node1 = tree.insert(tr_root, 0, None, open=True, text='本地文件')  # 根节点下添加一级节点
-    #     node11 = tree.insert(node1, 0, None, text='文件1')			# 添加二级节点
-    #     node12 = tree.insert(node1, 1, None, text='文件2')			# 添加二级节点
-    #     node2 = tree.insert(tr_root, 1, None, open=True, text='网络文件')  # 根节点下添加一级节点
-    #     node21 = tree.insert(node2, 0, None, text='文件1')			# 添加二级节点
-    #     node22 = tree.insert(node2, 1, None, text='文件2')			# 添加二级节点
+    def initPlayList(self):
+        '''初始化树状视图'''
+        self.frm_left.rowconfigure(0, weight=1)			# 左侧Frame帧行列权重配置以便子元素填充布局                 
+        self.frm_left.columnconfigure(0, weight=1)		# 左侧Frame帧中添加树状视图
+        tree = ttk.Treeview(self.frm_left, selectmode='browse', show='tree', padding=[0, 0, 0, 0])
+        tree.grid(row=0, column=0, sticky=tk.NSEW)		# 树状视图填充左侧Frame帧
+        tree.column('#0', width=150)					# 设置图标列的宽度，视图的宽度由所有列的宽决定
+        # 一级节点parent='',index=第几个节点,iid=None则自动生成并返回，text为图标右侧显示文字
+        # values值与columns给定的值对应
+        tr_root = tree.insert("", 0, None, open=True, text='播放列表')  # 树视图添加根节点
+        node1 = tree.insert(tr_root, 0, None, open=True, text='本地文件')  # 根节点下添加一级节点
+        node11 = tree.insert(node1, 0, None, text='文件1')			# 添加二级节点
+        node12 = tree.insert(node1, 1, None, text='文件2')			# 添加二级节点
+        node2 = tree.insert(tr_root, 1, None, open=True, text='网络文件')  # 根节点下添加一级节点
+        node21 = tree.insert(node2, 0, None, text='文件1')			# 添加二级节点
+        node22 = tree.insert(node2, 1, None, text='文件2')			# 添加二级节点
 
     def initCtrl(self):
         '''初始化控制滑块及按钮'''
