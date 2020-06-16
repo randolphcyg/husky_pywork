@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:10:32
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 11:32:40
+@LastEditTime: 2020-06-16 12:47:56
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -24,6 +24,7 @@ LoginPage(root)
 load = Image.open(ico)
 img = ImageTk.PhotoImage(load)
 root.tk.call('wm', 'iconphoto', root._w, img)
-root.rowconfigure(0,weight=1);          # 行权重
-root.columnconfigure(0,weight=1)        # 列权重
+# 设置尺寸和位置
+root.geometry('430x320+350+150')
+root.minsize(430, 320)
 root.mainloop()
