@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-15 16:30:00
+@LastEditTime: 2020-06-15 18:08:00
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion:
@@ -40,8 +40,8 @@ class InputFrame(Frame):                # 继承Frame类
             df = pd.DataFrame(columns=["学号", "姓名", "班级", "性别", "大学语文", "高等数学",
                                        "线性代数", "大学英语", "Python开发", "大学体育"])
             df.to_excel(output_file, encoding='utf-8', sheet_name="学生信息", index=False)
-
-        Label(self, text="信息录入页面", font=24, bg='#6A5ACD').grid(row=0, column=1, sticky=N, pady=10)
+        
+        Label(self, text="信息录入页面", font=("微软雅黑", 16), cursor='mouse', bg = '#FF00FF').grid(sticky=tkinter.E+tkinter.W, pady=20, columnspan=4)
         # 第一行
         Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
@@ -60,7 +60,7 @@ class InputFrame(Frame):                # 继承Frame类
 
         Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
         # 下拉菜单
-        self.cmb = ttk.Combobox(self)
+        self.cmb = ttk.Combobox(self, width=3)
         self.cmb.grid(row=2, column=3, sticky=W)
         self.cmb['value'] = ("男", "女")
         self.cmb.current(0)
@@ -95,9 +95,9 @@ class InputFrame(Frame):                # 继承Frame类
         self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
-        Button(self, text="保存", font=18, bd=3, bg='#22c9c9', command=self.save).grid(row=6, column=1, sticky=W)
+        Button(self, text="保存", font=18, bd=3, bg='#87CEFA', command=self.save).grid(row=6, column=1, sticky=W)
         Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=N)
-        Button(self, text="退出", font=18, bd=3, bg='#FF4500', command=self.quit).grid(row=6, column=1, sticky=E)
+        Button(self, text="退出", font=18, bd=3, bg='#F4A460', command=self.quit).grid(row=6, column=1, sticky=E)
 
     def quit(self):
         '''退出程序
@@ -191,7 +191,7 @@ class DelFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="信息查询删除页面", font=24, bg='#FF7F50').grid(row=0, column=1, sticky=N, pady=10)
+        Label(self, text="信息查询删除页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
         Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
@@ -235,7 +235,7 @@ class DelFrame(Frame):
         self.var_sub6 = tkinter.StringVar(self, value='')
         self.label_cla = Label(self, text="", font=20, textvariable=self.var_sub6).grid(row=5, column=3, sticky=W, padx=40, pady=5)
         # 第六行
-        Button(self, text="查询", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=6, column=1, sticky=W)
+        Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=W)
         Button(self, text="删除", font=18, bd=3, bg='#FFC0CB', command=self.delete).grid(row=6, column=1, sticky=N)
         Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
 
@@ -363,7 +363,7 @@ class UpdateFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="信息查询修改页面", font=24, bg='#D8BFD8').grid(row=0, column=1, sticky=N, pady=10)
+        Label(self, text="信息查询修改页面", font=("微软雅黑", 16), cursor='circle').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
         Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
@@ -382,7 +382,7 @@ class UpdateFrame(Frame):
 
         Label(self, text="性别:", font=20).grid(row=2, column=2, sticky=E, padx=40, pady=5)
         # 下拉菜单
-        self.cmb = ttk.Combobox(self)
+        self.cmb = ttk.Combobox(self, width=3)
         self.cmb.grid(row=2, column=3, sticky=W)
         self.cmb['value'] = ("男", "女")
         self.cmb.current(0)
@@ -417,7 +417,7 @@ class UpdateFrame(Frame):
         self.entry_sub6 = Entry(self, textvariable=self.var_sub6, width=30)
         self.entry_sub6.grid(row=5, column=3, sticky=W)
         # 第六行
-        Button(self, text="查询", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=6, column=1, sticky=W)
+        Button(self, text="查询", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=6, column=1, sticky=W)
         Button(self, text="保存", font=18, bd=3, bg='#4682B4', command=self.update).grid(row=6, column=1, sticky=N)
         Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=6, column=1, sticky=E)
 
@@ -570,7 +570,7 @@ class CountFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="报表页面", font=24, bg='#DDA0DD').grid(row=0, column=1, sticky=N, pady=10)
+        Label(self, text="学生信息报表页面", font=("微软雅黑", 16), cursor='cross').grid(row=0, column=1, sticky=N, pady=10)
         # 第一行
         Label(self, text="姓名:", font=20).grid(row=1, column=0, sticky=E, padx=40, pady=5)
         self.var_name = tkinter.StringVar(self, value='')
@@ -621,7 +621,7 @@ class CountFrame(Frame):
         self.label_total_grade = Label(self, text="", font=20, textvariable=self.var_total_grade).grid(row=6, column=3, sticky=W, padx=40, pady=5)
 
         # 第七行
-        Button(self, text="查询报表", font=18, bd=3, bg='#22c9c9', command=self.fetch).grid(row=7, column=1, sticky=W)
+        Button(self, text="查询报表", font=18, bd=3, bg='#87CEFA', command=self.fetch).grid(row=7, column=1, sticky=W)
         Button(self, text="清空", font=18, bd=3, bg='#F5F5DC', command=self.cancel).grid(row=7, column=1, sticky=E)
 
     def fetch(self):
@@ -747,7 +747,7 @@ class AboutFrame(Frame):
         self.createPage()
 
     def createPage(self):
-        Label(self, text="关于", font=24, bg='#00FFFF').grid(row=0, column=0, sticky=N, pady=10)
+        # Label(self, text="关于", font=("微软雅黑", 16, "bold")).grid(row=0, column=0, sticky=N, pady=10)
         # 嵌套区域一
         self.LF = ttk.LabelFrame(self, text='关于学生信息管理系统')
         self.LF.grid(column=0, row=0, padx=8, pady=4)
