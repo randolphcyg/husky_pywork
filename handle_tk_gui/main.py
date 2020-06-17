@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:10:32
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 16:09:04
+@LastEditTime: 2020-06-17 12:38:22
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统入口
@@ -27,6 +27,7 @@ def set_up_SIMS():
     # 设置尺寸和位置
     root.geometry('430x320+350+150')
     root.minsize(430, 320)
+    root.resizable(0, 0)       # 暂时防止用户调整尺寸
     root.mainloop()
 
 

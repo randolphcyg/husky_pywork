@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 16:09:13
+@LastEditTime: 2020-06-16 22:49:11
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统登录页面
@@ -71,9 +71,9 @@ class LoginPage(object):
         # 控制区第五行放置按钮
         frm_but = ttk.Frame(frm_login, padding=2)
         frm_but.grid(row=4, column=0, columnspan=2, sticky=tk.N)
-        tk.Button(frm_but, text="登录", font=self.ft, bd=3, bg='#87CEFA', command=self.login).grid(row=4, column=1, padx=20, pady=10)
-        tk.Button(frm_but, text="取消", font=self.ft, bd=3, bg='#FFFAF0', command=self.cancel).grid(row=4, column=2, padx=20, pady=10)
-        tk.Button(frm_but, text="退出", font=self.ft, bd=3, bg='#F4A460', command=self.quit).grid(row=4, column=3, padx=20, pady=10)
+        tk.Button(frm_but, text="登 录", font=self.ft, bd=3, bg='#87CEFA', command=self.login).grid(row=4, column=1, padx=20, pady=10)
+        tk.Button(frm_but, text="清 空", font=self.ft, bd=3, bg='#FFFAF0', command=self.cancel).grid(row=4, column=2, padx=20, pady=10)
+        tk.Button(frm_but, text="退 出", font=self.ft, bd=3, bg='#F4A460', command=self.quit).grid(row=4, column=3, padx=20, pady=10)
 
     def auto_fill_pwd(self):
         '''自动填写用户名密码
