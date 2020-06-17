@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-17 12:39:03
+@LastEditTime: 2020-06-17 12:40:49
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统各功能页面 
@@ -695,7 +695,7 @@ class CountFrame(Frame):
         self.label_cla = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_cla)
         self.label_cla.grid(row=2, column=1, sticky=tk.W, padx=40, pady=10)
 
-        self.label_evaluation_title = tk.Label(frm_content, text="总评:", font=self.ft)
+        self.label_evaluation_title = tk.Label(frm_content, text="总    评:", font=self.ft)
         self.label_evaluation_title.grid(row=2, column=2, sticky=tk.E, padx=40, pady=10)
         self.var_evaluation = tkinter.StringVar(frm_content, value='')
         self.label_evaluation = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_evaluation)
@@ -707,25 +707,25 @@ class CountFrame(Frame):
         self.label_failed_sub_count = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_failed_sub_count)
         self.label_failed_sub_count.grid(row=3, column=1, sticky=tk.W, padx=40, pady=10)
         # 第四行
-        self.label_fair_sub_count_title = tk.Label(frm_content, text="中等:", font=self.ft)
+        self.label_fair_sub_count_title = tk.Label(frm_content, text="中    等:", font=self.ft)
         self.label_fair_sub_count_title.grid(row=4, column=0, sticky=tk.E, padx=40, pady=10)
         self.var_fair_sub_count = tkinter.StringVar(frm_content, value='')
         self.label_fair_sub_count = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_fair_sub_count)
         self.label_fair_sub_count.grid(row=4, column=1, sticky=tk.W, padx=40, pady=10)
 
-        self.label_good_sub_count_title = tk.Label(frm_content, text="良好:", font=self.ft)
+        self.label_good_sub_count_title = tk.Label(frm_content, text="良    好:", font=self.ft)
         self.label_good_sub_count_title.grid(row=4, column=2, sticky=tk.E, padx=40, pady=10)
         self.var_good_sub_count = tkinter.StringVar(frm_content, value='')
         self.label_good_sub_count = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_good_sub_count)
         self.label_good_sub_count.grid(row=4, column=3, sticky=tk.W, padx=40, pady=10)
         # 第五行
-        self.label_excellent_sub_count_title = tk.Label(frm_content, text="优秀:", font=self.ft)
+        self.label_excellent_sub_count_title = tk.Label(frm_content, text="优    秀:", font=self.ft)
         self.label_excellent_sub_count_title.grid(row=5, column=0, sticky=tk.E, padx=40, pady=10)
         self.var_excellent_sub_count = tkinter.StringVar(frm_content, value='')
         self.label_excellent_sub_count = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_excellent_sub_count)
         self.label_excellent_sub_count.grid(row=5, column=1, sticky=tk.W, padx=40, pady=10)
 
-        self.label_gpa_title = tk.Label(frm_content, text="绩点:", font=self.ft)
+        self.label_gpa_title = tk.Label(frm_content, text="绩    点:", font=self.ft)
         self.label_gpa_title.grid(row=5, column=2, sticky=tk.E, padx=40, pady=10)
         self.var_gpa = tkinter.StringVar(frm_content, value='')
         self.label_gpa = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_gpa)
