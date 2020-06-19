@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:13:19
 @LastEditors: randolph
-@LastEditTime: 2020-06-17 12:40:49
+@LastEditTime: 2020-06-19 12:14:07
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统各功能页面 
@@ -20,6 +20,8 @@ from tkinter import Frame  # Frame
 import pandas as pd
 from PIL import Image, ImageTk
 
+from Tools import Tool
+
 ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 temp_file = os.path.join(ROOT_PATH, 'temp.xlsx')
 output_file = os.path.join(ROOT_PATH, 'student_info.xlsx')
@@ -27,9 +29,12 @@ pic = os.path.join(ROOT_PATH, 'randolph.jpg')
 
 
 class InputFrame(Frame):                # 继承 Frame 类
+    '''信息输入页面类
+    '''
     def __init__(self, master=None):
         Frame.__init__(self, master)
-        self.check_file()               # 校验表格文件
+        self.Tool = Tool()       # 初始化工具类
+        self.Tool.check_file()               # 校验表格文件
         self.createPage()
 
     def createPage(self):
@@ -120,22 +125,6 @@ class InputFrame(Frame):                # 继承 Frame 类
         self.but_cancel = tk.Button(frm_but, text="清 空", font=self.ft, bd=3, bg='#F5F5DC', command=self.cancel)
         self.but_cancel.grid(row=6, column=2, padx=20, pady=10, sticky=tk.N)
 
-    def check_file(self):
-        # 文件存在性校验
-        self.is_exist = os.path.exists(output_file)
-        if not self.is_exist:        # 校验表格存在性
-            df = pd.DataFrame(columns=["学号", "姓名", "班级", "性别", "大学语文", "高等数学",
-                                       "线性代数", "大学英语", "Python开发", "大学体育"])
-            df.to_excel(output_file, encoding='utf-8', sheet_name="学生信息", index=False)
-
-    def is_number(self, num):
-        pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
-        result = pattern.match(num)
-        if result:
-            return True
-        else:
-            return False
-
     def vaild_data(self):
         '''数据校验逻辑
         '''
@@ -152,19 +141,19 @@ class InputFrame(Frame):                # 继承 Frame 类
             sub6 = self.var_sub6.get()
             if not num or not name or not cla:
                 tkinter.messagebox.showerror("信息", message="姓名班级学号不可为空，请检查输入！")
-            elif not self.is_number(num):
+            elif not self.Tool.is_number(num):
                 tkinter.messagebox.showerror("警告", message="学号必须为正整数！请输入正确值！")
             elif not name.isalpha():
                 tkinter.messagebox.showerror("警告", message="姓名不合法！请修改后提交！")
             elif not sub1 or not sub2 or not sub3 or not sub4 or not sub4 or not sub5 or not sub6:
                 tkinter.messagebox.showerror("信息", message="各学科分数不能为空！请仔细检查！")
-            elif not self.is_number(sub1) or not self.is_number(sub2) or not self.is_number(sub3) or not self.is_number(sub4) or not self.is_number(sub5) or not self.is_number(sub6):
+            elif not self.Tool.is_number(sub1) or not self.Tool.is_number(sub2) or not self.Tool.is_number(sub3) or \
+            not self.Tool.is_number(sub4) or not self.Tool.is_number(sub5) or not self.Tool.is_number(sub6):
                 tkinter.messagebox.showerror("警告", message="各学科分数存在非法值！请仔细检查！")
             else:
                 num = int(num)
                 # 成绩转换为浮点类型
                 sub1, sub2, sub3, sub4, sub5, sub6 = float(sub1), float(sub2), float(sub3), float(sub4), float(sub5), float(sub6)
-
                 if sub1 < 0 or sub2 < 0 or sub3 < 0 or sub4 < 0 or sub5 < 0 or sub6 < 0:
                     tkinter.messagebox.showerror("警告", message="各学科分数不能为负数！请仔细检查！")
                 elif sub1 > 100 or sub2 > 100 or sub3 > 100 or sub4 > 100 or sub5 > 100 or sub6 > 100:
@@ -208,6 +197,8 @@ class InputFrame(Frame):                # 继承 Frame 类
 
 
 class DelFrame(Frame):
+    '''信息删除页面类
+    '''
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.createPage()
@@ -417,8 +408,11 @@ class DelFrame(Frame):
 
 
 class UpdateFrame(Frame):
+    '''信息更新页面类
+    '''
     def __init__(self, master=None):
         Frame.__init__(self, master)
+        self.Tool = Tool()       # 初始化工具类
         self.createPage()
 
     def createPage(self):
@@ -568,16 +562,6 @@ class UpdateFrame(Frame):
         self.var_sub5.set(sub5)
         self.var_sub6.set(sub6)
 
-    def is_number(self, num):
-        '''正则判断是否为数字串
-        '''
-        pattern = re.compile(r'^[-+]?[-0-9]\d*\.\d*|[-+]?\.?[0-9]\d*$')
-        result = pattern.match(num)
-        if result:
-            return True
-        else:
-            return False
-
     def vaild_data(self):
         '''数据校验逻辑
         '''
@@ -594,13 +578,14 @@ class UpdateFrame(Frame):
             sub6 = self.var_sub6.get()
             if not num or not name or not cla:
                 tkinter.messagebox.showerror("信息", message="姓名班级学号不可为空，请检查输入！")
-            elif not self.is_number(num):
+            elif not self.Tool.is_number(num):
                 tkinter.messagebox.showerror("警告", message="学号必须为正整数！请输入正确值！")
             elif not name.isalpha():
                 tkinter.messagebox.showerror("警告", message="姓名不合法！请修改后提交！")
             elif not sub1 or not sub2 or not sub3 or not sub4 or not sub4 or not sub5 or not sub6:
                 tkinter.messagebox.showerror("信息", message="各学科分数不能为空！请仔细检查！")
-            elif not self.is_number(sub1) or not self.is_number(sub2) or not self.is_number(sub3) or not self.is_number(sub4) or not self.is_number(sub5) or not self.is_number(sub6):
+            elif not self.Tool.is_number(sub1) or not self.Tool.is_number(sub2) or not self.Tool.is_number(sub3) or \
+             not self.Tool.is_number(sub4) or not self.Tool.is_number(sub5) or not self.Tool.is_number(sub6):
                 tkinter.messagebox.showerror("警告", message="各学科分数存在非法值！请仔细检查！")
             else:
                 num = int(num)
@@ -654,6 +639,8 @@ class UpdateFrame(Frame):
 
 
 class CountFrame(Frame):
+    '''报表页面类
+    '''
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.createPage()
@@ -729,7 +716,7 @@ class CountFrame(Frame):
         self.label_gpa_title.grid(row=5, column=2, sticky=tk.E, padx=40, pady=10)
         self.var_gpa = tkinter.StringVar(frm_content, value='')
         self.label_gpa = tk.Label(frm_content, text="", font=self.ft, textvariable=self.var_gpa)
-        self.label_gpa.grid(row=5, column=3, sticky=tk.W, padx=40, pady=5)
+        self.label_gpa.grid(row=5, column=3, sticky=tk.W, padx=40, pady=10)
 
         # 第六行
         self.label_average_grade_title = tk.Label(frm_content, text="平均成绩:", font=self.ft)
@@ -867,6 +854,8 @@ class CountFrame(Frame):
 
 
 class AboutFrame(Frame):
+    '''关于页面类
+    '''
     def __init__(self, master=None):
         Frame.__init__(self, master)
         self.createPage()
@@ -886,7 +875,7 @@ class AboutFrame(Frame):
 
         self.about_text = "【使用说明】\n\n1. 此次tkinter实践主要难点在于tkinter本身的页面跳转设计\n\n采用登录进来后子tab页面的设计\n\n2. 优点在于用pandas处理csv数据比较高效简便\n\n3. 涉及的点有学号作为唯一ID，其他数据有空值、非法值校验\n\n4. 查询可先输入姓名查询，若有多个重名，再补充学号即可\n\n5. 在报表功能中有设计对GPA的简单计算"
         self.var_about = tkinter.StringVar(self, value=self.about_text)
-        tk.Label(self.frm_about, text="", font=self.ft, justify=tk.LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=tk.W, padx=40, pady=5)
+        tk.Label(self.frm_about, text="", font=self.ft, justify=tk.LEFT, textvariable=self.var_about).grid(row=1, column=0, sticky=tk.W, padx=40, pady=10)
         # label插入图像 遵循grid布局
         self.load = Image.open(pic)
         self.render = ImageTk.PhotoImage(self.load)
