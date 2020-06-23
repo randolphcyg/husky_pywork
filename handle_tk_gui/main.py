@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:10:32
 @LastEditors: randolph
-@LastEditTime: 2020-06-17 12:38:22
+@LastEditTime: 2020-06-23 18:24:37
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统入口
@@ -14,10 +14,12 @@ from PIL import Image, ImageTk
 
 from LoginPage import LoginPage
 
+CUSTOM_ICO = 'randolph.ico'     # 自定义logo
+
 
 def set_up_SIMS():
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-    ico = os.path.join(ROOT_PATH, 'randolph.ico')
+    ico = os.path.join(ROOT_PATH, CUSTOM_ICO)
     root = tk.Tk()
     LoginPage(root)
     # 设置图标

@@ -2,7 +2,7 @@
 @Author: randolph
 @Date: 2020-06-13 00:11:30
 @LastEditors: randolph
-@LastEditTime: 2020-06-16 22:49:11
+@LastEditTime: 2020-06-23 18:25:18
 @version: 1.0
 @Contact: cyg0504@outlook.com
 @Descripttion: 学生信息管理系统登录页面
@@ -16,10 +16,10 @@ import tkinter.ttk as ttk
 from MainPage import MainPage
 
 path = os.getenv('temp')
-filename = os.path.join(path, 'pwd.txt')
+filename = os.path.join(path, 'pwd.txt')        # 密码文件，不需要自定义
 
-NAME = 'admin'      # 用户名
-PWD = 'admin'       # 密码
+NAME = 'admin'      # 用户名 支持自定义
+PWD = 'admin'       # 密码  支持自定义
 
 
 class LoginPage(object):
