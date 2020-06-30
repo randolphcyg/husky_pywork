@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+{% block index_active %}"current active"{% endblock %}
+{% block container %}
+    <div class="row">
+        <div class="col-md-4" style="font-size: larger">
+                <span class="right-title-border-name">&ensp;
+                    <i class="iconfont icon-quanxianguanli"></i>&ensp;
+                    <strong class="king-header-red">个人信息</strong>
+                </span>
+        </div>
+    </div>
+    {% comment %}个人信息{% endcomment %}
+    <hr>
+    <div class="row">
+        <div class="col-md-4 space_between">用户名：{{ user.username }}</div>
+        <div class="col-md-4 space_between">姓名：{{ user_profile.user_real_name }}</div>
+        <div class="col-md-4 space_between">学号：{{ user_profile.user_stu_num|default:"无" }}</div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 space_between">电话：{{ user_profile.user_phone|default:"无" }}</div>
+        <div class="col-md-4 space_between">邮箱：{{ user.email }}</div>
+        {% comment %} <div class="col-md-4 space_between">vip：{{ user_profile.user_vip|default:"待分配" }}</div> {% endcomment %}
+    </div>
+    <div class="row">
+        <div class="col-md-4 space_between">最后登录：{{ user.last_login }}</div>
+        <div class="col-md-4 space_between">加入日期：{{ user.date_joined }}</div>
+        <div class="col-md-4 space_between">是否管理：{% if user_profile.is_manager %}{{ "是" }}{% else %}{{ "否" }}{% endif %}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 space_between">是否员工：{% if user.is_staff %}{{ "是" }}{% else %}{{ "否" }}{% endif %}</div>
+        <div class="col-md-4 space_between">活跃状态：{% if user.is_active %}{{ "是" }}{% else %}{{ "否" }}{% endif %}</div>
+        <div class="col-md-4 space_between">是否超管：{% if user.is_superuser %}{{ "是" }}{% else %}{{ "否" }}{% endif %}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 space_between">用户描述：{{ user_profile.user_desc|default:"无" }}</div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="king-instruction king-instruction-info space_between">
+            <h5>说明：</h5>
+            <p>首页展示用户个人信息</p>
+        </div>
+    </div>
+{% endblock %}

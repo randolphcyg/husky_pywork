@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>股票信息系统</title>
+
+    <!-- Bootstrap css -->
+    <link href='{% static "assets/bootstrap-3.3.4/css/bootstrap_noresponsive.css" %}' rel="stylesheet">
+    <link href='{% static "iconfont/iconfont.css" %}' rel="stylesheet">
+    <link href='{% static "/css/bk.css" %}' rel="stylesheet">
+    <link href='{% static "/css/main.css" %}' rel="stylesheet">
+    <link href='{% static "assets/bootstrap-3.3.4/css/bootstrap-datetimepicker.css" %}' rel="stylesheet">
+    {% comment %} <![endif]--> {% endcomment %}
+    <!-- 如果要使用Bootstrap的js插件，必须先调入jQuery -->
+    <script src='{% static "assets/js/jquery-1.10.2.min.js" %}'></script>
+    <!-- 包括所有bootstrap的js插件或者可以根据需要使用的js插件调用　-->
+    <script src='{% static "assets/bootstrap-3.3.4/js/bootstrap.min.js" %}'></script>
+    <script src='{% static "js/index.js" %}'></script>
+    <script src='{% static "assets/jPages-0.7/js/jPages.js" %}'></script>
+    <script src='{% static "js/jquery.tabledit.js" %}'></script>
+    <script src="{% static "assets/bootstrap-3.3.4/js/bootstrap-datetimepicker.js" %}" charset="UTF-8"></script>
+    <script src="{% static "assets/bootstrap-3.3.4/js/locales/bootstrap-datetimepicker.fr.js" %}" charset="UTF-8"></script>
+    <script src="{% static "js/jquery.tabledit.min.js" %}"></script>
+    <style>
+        #modify_pwd_a {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+    <!-- 头部 -->
+    <header>
+        <div class="navbar navbar-black">
+            <div class="navbar-container">
+                <div class="navbar-header pull-left">
+                    <a class="navbar-brand" href="#">
+                        股票信息系统
+                    </a>
+                </div>
+                <div class="dropdown pull-right">
+                    <button type="button" class="btn dropdown-toggle btn-info" style="border-radius: 6px"
+                            id="dropdownMenu1" data-toggle="dropdown">
+                        {{ request.user }}
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" data-toggle="modal" data-dismiss="modal"
+                               data-target="#modify_password" id="modify_pwd_a">修改密码</a>
+                        </li>
+                        <li role="presentation">
+                            <a class="dropdown-item" role="menuitem" tabindex="-1" href='/logout/'>退出登录</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- 头部 -->
+
+    <!-- 侧边栏 -->
+    <div class="king-vertical-nav4">
+        <div class="sidebar-inner">
+            <ul class="navi">
+                <li class={% block index_active %}{% endblock %}>
+                    <a href="/index/">
+                        <i class="iconfont icon-shouyex"></i>用户个人信息
+                    </a>
+                </li>
+            {% if perms.User.can_approval or request.user.userprofile.is_manager  %}
+                <li class={% block approval_active %}{% endblock %}>
+                    <a href="/user/approval/">
+                        <i class="iconfont icon-gaizhangshenpi"></i>注册申请
+                    </a>
+                </li>
+            {% endif %}
+            {% if perms.Information.view_stock_stat or request.user.userprofile.is_manager %}
+                <li class="has_submenu {% block info_active %}{% endblock %}">
+                    <a href="javascript:;">
+                        <i class="iconfont icon-rizhishenji"></i>股票信息
+                        <span class="pull-right"><i class="iconfont icon-xiala-"></i></span>
+                    </a>
+                    <ul class="sub-menu">
+                    {% if perms.Information.view_stock_stat or request.user.userprofile.is_manager %}
+                        <li class={% block info_stock_stat_active %}{% endblock %}>
+                            <a href="/info/stock/">单股评论信息<i class="fa fa-chevron-right pull-right"></i></a>
+                        </li>
+                    {% endif %}
+                    </ul>
+                </li>
+            {% endif %}
+            </ul>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="modify_password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title text-center">修改密码</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">旧密码</label><span style="color: red">*</span>
+                        <input class="form-control" type="password" id="password0" placeholder="请输入原密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="">新密码</label><span style="color: red">*</span>
+                        <input class="form-control" type="password" id="password1" placeholder="至少6位字母或数字">
+                    </div>
+                    <div class="form-group">
+                        <label for="">再次输入新密码</label><span style="color: red">*</span>
+                        <input class="form-control" type="password" id="password2" placeholder="至少6位字母或数字">
+                    </div>
+                </div>
+                <div id="changePasswordAlert" class="alert alert-danger" role="alert"
+                     style="width: 30%; margin-bottom: 6px; display: none;"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">取&nbsp;&nbsp;消</button>
+                    <button type="button" class="btn btn-info modify_pwd" onclick="changePassword()">修&nbsp;&nbsp;改</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="king-main-container">
+        {% block container %}
+        {% endblock %}
+    </div>
+</div>
+<script type="text/javascript">
+    function changePassword() {
+        var changePasswordAlert = '';
+        $('#changePasswordAlert').hide();
+        if (!$('#password0').val()) {
+            changePasswordAlert += '**  旧密码不能为空！<br />';
+        }
+        if (!$('#password1').val()) {
+            changePasswordAlert += '**  新密码不能为空！<br />';
+        }
+        if (!$('#password2').val()) {
+            changePasswordAlert += '**  确认密码不能为空！<br />';
+        }
+        if ($('#password1').val() != $('#password2').val()) {
+            changePasswordAlert += '**  两次密码不一致！<br />';
+        }
+        if ($('#password0').val() == $('#password1').val()) {
+            changePasswordAlert += '**  新密码和旧密码不能一样！<br />';
+        }
+        if (changePasswordAlert) {
+            $('#changePasswordAlert').html(changePasswordAlert);
+            $('#changePasswordAlert').show();
+        } else {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/user/change_pwd/',
+                type: 'POST',
+                data: {
+                    username: "{{ request.user }}",
+                    oldPassword: $('#password0').val(),
+                    newPassword: $('#password1').val(),
+                },
+                success: function (res) {
+                    if (res == "success") {
+                        window.location.href = "http://127.0.0.1:8000/login/"
+                        alert("修改密码成功！请重新登录！")
+                    } else {
+                        result = JSON.parse(res)
+                        alert(result.result)
+                    }
+                }
+            })
+        }
+    }
+
+    $('.checkboxAll input').click(function (event) {
+            if($(this).attr('checked')){
+                $(this).attr('checked',false);
+                $(".checkboxOne input").attr({'checked': false})
+                $(".checkboxOne input").prop({'checked': false})
+            }else{
+                $(this).attr('checked',true)
+                $(".checkboxOne input").attr({'checked': true})
+                $(".checkboxOne input").prop({'checked': true})
+            }
+        })
+        // 单个选择
+    $(".checkboxOne input").click(function(event) {
+            var flag = false;
+            if ($(this).attr('checked')) {
+                $(this).attr('checked', false);
+
+            } else {
+                $(this).attr('checked', true)
+
+            }
+            $('.checkboxOne input').each(function (index, val) {
+                if ($(val).attr('checked')) {
+                    flag = true;
+                } else {
+                    flag = false;
+                    return false;
+                }
+            });
+            if (flag) {
+                $('.checkboxAll input').attr('checked', true);
+                $('.checkboxAll input').prop('checked', true);
+            } else {
+                $('.checkboxAll input').attr('checked', false);
+                $('.checkboxAll input').prop('checked', false);
+            }
+        })
+</script>
+{% block script %}
+{% endblock %}
+</body>
+
+</html>
