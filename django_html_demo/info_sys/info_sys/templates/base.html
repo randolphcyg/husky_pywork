@@ -6,7 +6,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>股票信息系统</title>
+    <title>股评舆情分析系统</title>
 
     <!-- Bootstrap css -->
     <link href='{% static "assets/bootstrap-3.3.4/css/bootstrap_noresponsive.css" %}' rel="stylesheet">
@@ -40,7 +40,7 @@
             <div class="navbar-container">
                 <div class="navbar-header pull-left">
                     <a class="navbar-brand" href="#">
-                        股票信息系统
+                        股评舆情分析系统
                     </a>
                 </div>
                 <div class="dropdown pull-right">
@@ -88,6 +88,9 @@
                     </a>
                     <ul class="sub-menu">
                     {% if perms.Information.view_stock_stat or request.user.userprofile.is_manager %}
+                        <li class={% block predict_stock_stat_active %}{% endblock %}>
+                            <a href="/info/predict_stock/">股评舆情分析<i class="fa fa-chevron-right pull-right"></i></a>
+                        </li>
                         <li class={% block info_stock_stat_active %}{% endblock %}>
                             <a href="/info/stock/">单股评论信息<i class="fa fa-chevron-right pull-right"></i></a>
                         </li>

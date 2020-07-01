@@ -26,6 +26,26 @@ src_file = '15000-20000.csv'    # csv文件
 @csrf_exempt
 @transaction.atomic
 @login_required(login_url="/login/")
+def predict_stock(request):
+    text = request.GET.get('inputText', "")
+    # t, encode, pred = model_predict(text) #接口
+    t, encode, pred = ("必涨",[0,1,2,2,3,4,5,6],1)
+    if pred == 0:
+        p = '看跌'
+    elif pred == 5:
+        p = '看涨'
+    else:
+        p = '不能确定'
+    en = [str(x) for x in encode]
+    res = dict()
+    res['cleaned_text'] = t
+    res['pred'] = p
+    res['encode'] = en
+    return render(request, 'predict_stock.html', res)
+
+@csrf_exempt
+@transaction.atomic
+@login_required(login_url="/login/")
 def stock_stat_view(request):
     st_code = request.GET.get("st_code", "")
     page = int(request.GET.get("page", 1))

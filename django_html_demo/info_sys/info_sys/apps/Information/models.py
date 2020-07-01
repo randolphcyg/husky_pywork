@@ -14,6 +14,7 @@ class StockStat(models.Model):
     class Meta:
         db_table = 'stock_stat'
         permissions = (
+            # ('predict_stock_stat', 'predict stock_stat'),
             ('view_stock_stat', 'View stock_stat'),
             ('modify_stock_stat', 'Modify stock_stat'),
         )

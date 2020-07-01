@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load information_extras %}
+
+{% block info_active %}
+    open
+{% endblock %}
+
+{% block predict_stock_stat_active %}
+    "current active"
+{% endblock %}
+
+{% block info_stock_stat_active %}
+
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-12" style="font-size: larger">
+            <span class="right-title-border-name">&ensp;
+                <i class="iconfont icon-yunfuwuqi"></i>&ensp;
+                <strong class="king-header-red">股评舆情分析</strong>
+            </span>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel-btns form-group">
+            <div class="row">
+        <div class="form-group">
+            <label for="inputText">股评:</label>
+            <input id ="inputText" type="text" class="form-control" placeholder="评论内容" name="s">
+            <button class="btn btn-default" onclick="btnClick()">Submit</button>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+      <!-- Default panel contents -->
+      <div class="panel-heading">结果演示</div>
+
+      <!-- List group -->
+      <ul id = 'result-list' class="list-group">
+        <li class="list-group-item list-group-item-success">数据清洗结果</li>
+        <li class="list-group-item">未输入数据</li>
+        <li class="list-group-item list-group-item-success">模型输入</li>
+        <li class="list-group-item ">未输入数据</li>
+        <li class="list-group-item list-group-item-success">模型预测</li>
+        <li class="list-group-item ">未输入数据</li>
+      </ul>
+    </div>
+</div>
+    <script type="text/javascript">
+    function btnClick() {
+        var x= $("#inputText").val();
+        $.ajax({
+            url: "{% url 'predict_stock' %}",
+            data: {"inputText":x},
+            success:function (data){
+                console.log(data);
+                 document.getElementById('result-list').innerHTML = function (){
+                     var arr = [];
+                     var cl_text = data['cleaned_text'];
+                     var input_lst = data['encode'].join('  ').substr(0,100);
+                     var pred = data['pred'];
+                     arr.push('<li class="list-group-item list-group-item-success">数据清洗结果</li>');
+                     arr.push('<li class="list-group-item">'+cl_text+'</li>');
+                     arr.push('<li class="list-group-item list-group-item-success">模型输入</li>');
+                     arr.push('<li class="list-group-item">'+'[ '+input_lst+' ... ]'+'</li>');
+                     arr.push('<li class="list-group-item list-group-item-success">模型预测</li>');
+                     arr.push('<li class="list-group-item">'+pred+'</li>');
+                     return arr.join('')
+                 }();
+            }
+        })
+    }
+    </script>
+{% endblock %}
