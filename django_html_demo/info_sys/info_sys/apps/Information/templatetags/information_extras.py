@@ -1,5 +1,5 @@
-from django.http import HttpResponse
 from django import template
+from django.http import HttpResponse
 
 register = template.Library()           # 注册自定义模板
 
@@ -22,4 +22,3 @@ def time_format(second_time):
             return '%d天%d时%d分%d秒' % (d, h, m, s)
     except Exception as e:
         return HttpResponse(content="wrong in 'apps/Information/templatetags/user_extras.py/time_format' ! ")
-

@@ -10,12 +10,13 @@ from django.core.paginator import (EmptyPage, InvalidPage, PageNotAnInteger,
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
-from apps.User.models import UserProfile
 from django.views.decorators.csrf import csrf_exempt
 
-TABLE_SIZE = 5                      # 注册审批页面表格行数
+from apps.User.models import UserProfile
+
 # Create your views here.
+TABLE_SIZE = 5                      # 注册审批页面表格行数
+
 
 @csrf_exempt
 def login_view(request):
@@ -63,6 +64,7 @@ def user_profile_view(request):
             return redirect("/login/")
     return render(request, 'index.html',
                   {"user": user, "user_profile": user_profile, })
+
 
 @csrf_exempt
 def registration(request):
@@ -123,8 +125,10 @@ def registration_dispatch(request):
     # 调用自定义分页方法
     zip_obj, pages, page_obj, page, paginator = paginator_interface(profile, page, TABLE_SIZE)
     return render(request, 'approval.html', {"page_obj": page_obj, 'zip_obj': zip_obj, "keys": keys,
-                                               'page': page, 'paginator': paginator, 'pages': pages})
+                                             'page': page, 'paginator': paginator, 'pages': pages})
 
+
+@csrf_exempt
 @login_required(login_url="/login/")
 @transaction.atomic
 def reject_user(request):
@@ -136,6 +140,7 @@ def reject_user(request):
         user_profile.is_approval = -2  # 拒绝注册，比停用状态低一级别
         user_profile.save()
         return HttpResponse(content="success")
+
 
 @csrf_exempt
 @login_required(login_url="/login/")
@@ -153,6 +158,7 @@ def pass_user(request):
             user_profile.auth_user.save()
             user_profile.save()
         return HttpResponse(content="success")
+
 
 @csrf_exempt
 @login_required(login_url="/login/")

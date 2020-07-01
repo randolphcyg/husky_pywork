@@ -69,6 +69,14 @@
 
                 <tfoot>
                     <tr>
+                        <td colspan="7">
+                            <div class="">
+                                <button type="button" class="btn btn-info batch_approval" data-toggle="tooltip" data-placement="top"
+                                            style="border-radius: 7px" >批量批准</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="6">
                             <div id="pages" class="text-center">
                                 <nav>
@@ -108,17 +116,15 @@
         </div>
     </div>
     <script type="text/javascript">
-    baseurl = "http://127.0.0.1:8000";
     // 拒绝
     $('.reject_user').click(function () {
         var username = $(this).parents("tr").find(".username").text();
         var user_real_name = $(this).parents("tr").find(".user_real_name").text();
         var email = $(this).parents("tr").find(".email").text();
         data = {"username": username, "user_real_name": user_real_name, "email": email};
-        $.post(baseurl + "/user/reject_user/", data, function (res) {
+        $.post("{% url 'reject_user' %}", data, function (res) {
             if (res == "success") {
-                // alert("拒绝审批,is_approval给-2")
-                window.location.href = "http://127.0.0.1:8000/user/approval/"
+                window.location.reload();
             } else {
                 result = JSON.parse(res)
                 alert(result.result)
@@ -129,10 +135,9 @@
     $('.pass_user').click(function () {
         var username = $(this).parents("tr").find(".username").text();
         data = {"username_list": JSON.stringify([username])};
-        $.post(baseurl + "/user/pass_user/", data, function (res) {
+        $.post("{% url 'pass_user' %}", data, function (res) {
             if (res == "success") {
-                // alert("审批通过,is_approval给1")
-                window.location.href = "http://127.0.0.1:8000/user/approval/"
+                window.location.reload();
             } else {
                 result = JSON.parse(res)
                 alert(result.result)
@@ -147,10 +152,9 @@
             username_list.push(username)
         }
         data={"username_list": JSON.stringify(username_list)}
-        $.post(baseurl + "/user/pass_user/", data, function (res) {
+        $.post("{% url 'pass_user' %}", data, function (res) {
             if (res == "success") {
-                // alert("审批通过,is_approval给1")
-                window.location.href = "http://127.0.0.1:8000/user/approval/"
+                window.location.reload();
             } else {
                 result = JSON.parse(res)
                 alert(result.result)
@@ -163,10 +167,9 @@
         var user_real_name = $(this).parents("tr").find(".user_real_name").text();
         var email = $(this).parents("tr").find(".email").text();
         data = {"username": username, "user_real_name": user_real_name, "email": email};
-        $.post(baseurl + "/user/pass_manager_user/", data, function (res) {
+        $.post("{% url 'pass_manager_user' %}", data, function (res) {
             if (res == "success") {
-                // alert("审批通过,is_approval给1,is_manager给1")
-                window.location.href = "http://127.0.0.1:8000/user/approval/"
+                window.location.reload();
             } else {
                 result = JSON.parse(res)
                 alert(result.result)

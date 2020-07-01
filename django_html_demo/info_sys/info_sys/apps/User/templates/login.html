@@ -101,7 +101,7 @@
 <!-- End of modal -->
 <br><br><br><br><br><br>
 <div class="footer">
-    <span>Copyright © 2020.穿越时间,你我都是同学</span>
+    <span>Copyright © 2020.STOCK</span>
 </div>
 
 <!-- jQuery -->
@@ -117,14 +117,12 @@
 </div>
 </body>
 <script type="text/javascript">
-    baseurl = "http://127.0.0.1:8000";
     function register() {
         username=$("#username").val();
         real_name=$("#real_name").val();
         email=$("#email").val();
         pwd1=$("#password").val();
         pwd2=$("#password2").val();
-
         if(username.length<6||username.length>15){
             alert("用户名为6-15位字母或数字（以字母开头）！");
             return ;
@@ -143,10 +141,10 @@
                     "email": email,
                     "real_name": real_name,
                 };
-                $.post(baseurl+"/user/registration/",data,function (res) {
+                $.post("{% url 'registration'  %}",data,function (res) {
                     if(res == "success"){
                         alert("注册成功，返回登录界面，等待批准通过邮件即可登陆！")
-                        window.location.href="http://127.0.0.1:8000/login/"
+                        window.location.reload();
                     }
                     else{
                         result = JSON.parse(res)

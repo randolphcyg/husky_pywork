@@ -18,10 +18,9 @@ from apps.User.models import UserProfile
 
 # Create your views here.
 
-TABLE_SIZE = 9      # 注册审批页面表格行数
-PAGE_SIZE = 10
-# ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
-src_file = '15000-20000.csv'
+TABLE_SIZE = 9                  # 注册审批页面表格行数
+PAGE_SIZE = 10                  # 每页显示行数
+src_file = '15000-20000.csv'    # csv文件
 
 
 @csrf_exempt
