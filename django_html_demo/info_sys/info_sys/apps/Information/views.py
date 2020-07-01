@@ -27,21 +27,45 @@ src_file = '15000-20000.csv'    # csv文件
 @transaction.atomic
 @login_required(login_url="/login/")
 def predict_stock(request):
-    text = request.GET.get('inputText', "")
-    # t, encode, pred = model_predict(text) #接口
-    t, encode, pred = ("必涨",[0,1,2,2,3,4,5,6],1)
-    if pred == 0:
-        p = '看跌'
-    elif pred == 5:
-        p = '看涨'
+    if request.method == 'GET':
+        st_desc = request.GET.get('st_desc', '')
+        if st_desc:
+            encode = [1012,6442,347,6237,7219,3389,4692,3326,7361,809,678,3221,4900,2166,1079,2159,64215]
+            pred = 5
+            if pred == 0:
+                pred_res = '看跌'
+            elif pred == 5:
+                pred_res = '看涨'
+            else:
+                pred_res = '不能确定'
+            res = dict()
+            regex_str = ".*?([\u4E00-\u9FA5]+).*?"      # 匹配中文正则表达式
+            match_obj = re.findall(regex_str, st_desc)
+            if match_obj:
+                clear_st_desc = ''.join(match_obj)
+                res['clean_st_desc'] = clear_st_desc
+                res['encode'] = encode
+                res['pred_res'] = pred_res
+                return render(request, 'predict_stock.html', {'res': res})
+            else:
+                res = dict()
+                res['clean_st_desc'] = "无"
+                res['encode'] = "无"
+                res['pred_res'] = "无"
+                return render(request, 'predict_stock.html', {'res': res})
+        else:
+            res = dict()
+            res['clean_st_desc'] = "无"
+            res['encode'] = "无"
+            res['pred_res'] = "无"
+            return render(request, 'predict_stock.html', {'res': res})
     else:
-        p = '不能确定'
-    en = [str(x) for x in encode]
-    res = dict()
-    res['cleaned_text'] = t
-    res['pred'] = p
-    res['encode'] = en
-    return render(request, 'predict_stock.html', res)
+        res = dict()
+        res['clean_st_desc'] = "无"
+        res['encode'] = "无"
+        res['pred_res'] = "无"
+        return render(request, 'predict_stock.html', {'res': res})
+
 
 @csrf_exempt
 @transaction.atomic
