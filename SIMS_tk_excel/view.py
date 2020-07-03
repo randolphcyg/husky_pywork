@@ -800,9 +800,9 @@ class CountFrame(Frame):
                 good_sub_count += 1
             if sub > 85:
                 excellent_sub_count += 1
-                sub * 4
         average_grade = round(total_grade / len(sub_list), 1)          # 四舍五入
         # 总评计算
+        evaluation = ""
         if gpa < 1:
             evaluation = "不及格"
         elif 2.5 > gpa >= 1:
