@@ -16,7 +16,7 @@ PWD = 'admin'       # 密码  支持自定义
 class LoginPage(object):
     def __init__(self, master=None):
         self.root = master  # 定义内部变量root
-        self.root.title("音乐信息管理系统")     # 窗口标题
+        self.root.title("学生信息管理系统")     # 窗口标题
         # 设置顶级窗体的行列权重，否则子组件的拉伸不会填充整个窗体
         self.root.rowconfigure(0, weight=1)
         self.root.columnconfigure(0, weight=1)
@@ -35,7 +35,7 @@ class LoginPage(object):
         # 标题
         frm_login = ttk.Frame(self.page, padding=2)
         frm_login.grid(row=0, column=0, columnspan=2, sticky=tk.N)
-        self.label_title = tk.Label(frm_login, text="音乐信息管理系统", font=self.ft_title, cursor='circle')
+        self.label_title = tk.Label(frm_login, text="学生信息管理系统", font=self.ft_title, cursor='circle')
         self.label_title.grid(row=0, column=0, columnspan=2, sticky=tk.N, padx=100, pady=20)
         # 用户行
         frm_user = ttk.Frame(frm_login, padding=2)

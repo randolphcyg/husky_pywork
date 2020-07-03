@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Free HTML5 Template by FreeHTML5.co"/>
+    <meta name="keywords" content="free html5, free template, free bootstrap, html5, css3, mobile first, responsive"/>
+    <link rel="stylesheet" href='{% static "css/bootstrap.min.css" %}'>
+    <link rel="stylesheet" href='{% static "css/animate.css" %}'>
+    <link rel="stylesheet" href='{% static "css/style.css" %}'>
+    <!-- Modernizr JS -->
+    <script src='{% static "js/modernizr-2.6.2.min.js" %}'></script>
+    <!-- FOR IE9 below -->
+    <script src='{% static "js/respond.min.js" %}'></script>
+
+</head>
+
+<body>
+
+<div class="index-banner" style="background: url('{% static "sc.jpg" %}'); text-align: center;">
+
+<div class="container" style="padding-bottom: 0px">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3" style="border-radius: 6px">
+            <!-- 登录表单 -->
+            <form action="/login/?next={{ next }}" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+                <div class="header">
+                    <p class="lead">校友录信息系统</p>
+                </div>
+                <div>
+                    <span style="color: red">
+                        {% if info %}
+                            {{ info }}
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" class="form-control" name="username" id="Username" placeholder="用户名"
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" class="form-control" name="password" id="Password" placeholder="密码"
+                           autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <p>没有注册？<a href="#" data-toggle="modal" data-dismiss="modal" data-target="#register">注册</a></p>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="登录" class="btn btn-info">
+                </div>
+            </form>
+            <!-- END Sign In Form -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h3 class="modal-title text-center">注册</h3>
+                        </div>
+                        <div class="modal-body" style="padding: 0px">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">用户名</label>
+                                <input class="form-control" type="text" id="username" placeholder="6-15位字母或数字（以字母开头）">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">姓名</label>
+                                <input class="form-control" type="text" id="real_name" placeholder="真实姓名">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">邮箱</label>
+                                <input class="form-control" type="text" id="email" placeholder="可用于找回密码">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">学校</label>
+                                <input class="form-control" type="text" id="university" placeholder="上海交通大学">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">班级</label>
+                                <input class="form-control" type="text" id="cla" placeholder="2">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">专业</label>
+                                <input class="form-control" type="text" id="profession" placeholder="计算机科学与技术">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">密码</label>
+                                <input class="form-control" type="password" id="password" placeholder="至少6位字母或数字">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <span style="color: red"> * </span><label for="">再次输入密码</label>
+                                <input class="form-control" type="password" id="password2" placeholder="至少6位字母或数字">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-info" onclick="register()">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of modal -->
+<br><br><br><br><br><br>    
+<div class="footer">
+    <span>Copyright © 2020-forever.穿越时间，和你做同桌</span>
+</div> 
+<!-- jQuery -->
+<script src={% static "js/jquery.min.js" %}></script>
+<!-- Bootstrap -->
+<script src={% static "js/bootstrap.min.js" %}></script>
+<!-- Placeholder -->
+<script src={% static "js/jquery.placeholder.min.js" %}></script>
+<!-- Waypoints -->
+<script src={% static "js/jquery.waypoints.min.js" %}></script>
+<!-- Main JS -->
+<script src={% static "js/main.js" %}></script>
+</div>
+</body>
+<script type="text/javascript">
+    function register() {
+        username=$("#username").val();
+        real_name=$("#real_name").val();
+        email=$("#email").val();
+        university=$("#university").val();
+        profession = $("#profession").val();
+        cla = $("#cla").val();
+        pwd1=$("#password").val();
+        pwd2=$("#password2").val();
+        if(Object.keys(university).length === 0){
+            alert("学校不可为空！");
+            return ;
+        }
+        if(username.length<6||username.length>15){
+            alert("用户名为6-15位字母或数字（以字母开头）！");
+            return ;
+        }
+        if(pwd1.length<6||pwd2.length<6){
+            alert("密码至少6位字母或数字！");
+            return ;
+        }
+        if(username&&real_name&&email&&pwd1&&pwd2){
+            if (pwd1!=pwd2){
+                alert("两次输入的密码不一致！")
+            }else{
+                data={
+                    "password": pwd1,
+                    "username": username,
+                    "email": email,
+                    'university': university,
+                    'profession': profession,
+                    "real_name": real_name,
+                };
+                $.post("{% url 'registration'  %}", data, function (res) {
+                    if(res == "success"){
+                        alert("注册成功，请注意查收邮件！")
+                        window.location.reload();
+                    }
+                    else{
+                        result = JSON.parse(res)
+                        alert(result.result)
+                    }
+                })
+            }
+        }
+        else{
+            alert("请正确填写信息！")
+        }
+        }
+</script>
+</html>

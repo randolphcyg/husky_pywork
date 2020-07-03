@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% load information_extras %}
+
+{% block info_active %}
+    open
+{% endblock %}
+
+{% block talk_cla_mate_active %}
+    "current active"
+{% endblock %}
+
+{% block info_cla_mate_active %}
+    "current active"
+{% endblock %}
+
+{% block approval_active %}
+    "current active"
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-12" style="font-size: larger">
+            <span class="right-title-border-name">&ensp;
+                <i class="iconfont icon-yunfuwuqi"></i>&ensp;
+                <strong class="king-header-red">班级成员信息</strong>
+            </span>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="panel-btns form-group">
+            <form class="">
+            <div class="col-md-2"><input name="classmate_id" class="form-control" type="text" placeholder="姓 名"></div>
+            <div class="col-md-1"><input class="btn btn-info" style="border-radius: 7px" type="submit" value="搜    索"></div>
+            </form>
+        </div>
+        <div class="col-md-12">
+        <div class="panel panel-default pannel-overflow panel-tables">
+            <table class="table table-hover table-condensed">
+                <thead>
+                <tr class="active center_tr">
+                    <th style="width:5%">序号</th>
+                    <th style="width:20%">姓名</th>
+                    <th style="width:75%">个人简介</th>
+                </tr>
+                </thead>
+
+                {% for v, index in zip_obj %}
+                    <tbody id="data">
+                    <tr style="display: table-row; opacity: 1; text-align: center">
+                        <td class="active"><span class="text-darker classmate_id">{{ index }}</span></td>
+                        <td class="info"><span class="text-dark classmate_id">{{ v.classmate_id|default:"无" }}</span></td>
+                        <td class="danger"><span class="text-dark cm_desc">{{ v.classmate_desc|default:"无" }}</span></td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+
+                <tfoot>
+                    <tr>
+                        <td colspan="11">
+                            <div id="pages" class="text-center">
+                                <nav>
+                                    <ul class="pagination">
+                                        {% if page_obj.has_previous %}
+                                            <li><a class='active' href="?page={{ page_obj.previous_page_number }}&{{ keys }}">
+                                                <span aria-hidden="true">&laquo;</span></a></li>
+                                        {% else %}
+                               				<li class="disabled">
+                            					<a href="#" aria-label="Next">
+												<span aria-hidden="true">&laquo;</span>
+                           						 </a>
+                       						 </li>		
+                                        {% endif %}
+
+                                        {% for num in pages %}
+                                            {% if num == page %}
+                                                <li class="item active"><a href="/info/ais_classmate_view/{% url 'ais_classmate_view' %}?page={{ num }}&{{ keys }}">{{ num }}</a></li>
+                                            {% else %}
+                                                {% if num is not None %}
+                                                    <li class="item"><a href="/info/ais_classmate_view/?page={{ num }}&{{ keys }}">{{ num }}</a></li>
+                                                {% else %}
+                                                    <li><span>...</span></li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if page_obj.has_next %}
+                                            <li><a class='active' href="?page={{ page_obj.next_page_number }}&{{ keys }}">
+                                                <span aria-hidden="true">&raquo;</span></a></li>
+                                        {% else %}
+                               				<li class="disabled">
+                            					<a href="#" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+                           						 </a>
+                       						 </li>		
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            
+            </table>
+            <div class="row">
+                <div class="king-instruction king-instruction-info space_between">
+                    <h5 style="color: black">操作说明：</h5>
+                    <p class="text text-danger">1.此页面进行班级成员管理</p>
+                    <p class="text text-info">2.可根据所需条件模糊查询同学信息</p>
+                    <p class="text text-warning">3.可以对同学进行踢出操作</p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="king-instruction king-instruction-info space_between">
+            <h5 style="color: black">说明：</h5>
+            <p class="text text-danger">此页面为班级同学信息</p>
+            <p class="text text-warning">hello</p>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // 触发气泡
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+    </script>
+{% endblock %}

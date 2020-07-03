@@ -859,7 +859,7 @@ class AboutFrame(Frame):
         self.ft_title = tkf.Font(family='微软雅黑', size=16)    # 标题字体
         self.ft = tkf.Font(family='微软雅黑', size=12)          # 普通字体
         # 嵌套区域
-        self.frm_about = ttk.LabelFrame(self.page, padding=2, text='关于音乐信息管理系统')
+        self.frm_about = ttk.LabelFrame(self.page, padding=2, text='关于学生信息管理系统')
         self.frm_about.grid(row=0, column=0, columnspan=4, sticky=tk.N)
 
         self.about_text = "【使用说明】\n\n1. 此次tkinter实践主要难点在于tkinter本身的页面跳转设计\n\n采用登录进来后子tab页面的设计\n\n2. 优点在于用pandas处理csv数据比较高效简便\n\n3. 涉及的点有学号作为唯一ID，其他数据有空值、非法值校验\n\n4. 查询可先输入姓名查询，若有多个重名，再补充学号即可\n\n5. 在报表功能中有设计对GPA的简单计算"
@@ -871,10 +871,10 @@ class AboutFrame(Frame):
         self.label_img = tk.Label(self.frm_about, image=self.render)
         self.label_img.grid(row=1, column=1, sticky=tk.W)
         # 嵌套区域二
-        labelsFrame = ttk.LabelFrame(self.frm_about, text=' About ZYT ')
+        labelsFrame = ttk.LabelFrame(self.frm_about, text=' About ME ')
         labelsFrame.grid(column=0, row=8, columnspan=4)
 
-        self.label_des1 = tk.Label(labelsFrame, font=self.ft, text="Music是我的理想")
+        self.label_des1 = tk.Label(labelsFrame, font=self.ft, text="Freedom是我的理想")
         self.label_des1.grid(column=0, row=0)
         self.label_des2 = tk.Label(labelsFrame, font=self.ft, text="向往着自由 向往着缤纷浪漫的生活")
         self.label_des2.grid(column=0, row=1, sticky=tk.W)
