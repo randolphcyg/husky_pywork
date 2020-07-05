@@ -83,40 +83,39 @@
                     </a>
                 </li>
             {% endif %}
-            {% comment %} XX管理菜单-普通用户 {% endcomment %}
-            {% if perms.Information.view_cla_mate or request.user.userprofile.is_manager %}
+            {% comment %} 管理菜单 {% endcomment %}
+            {% if perms.Information.view_cla or request.user.userprofile.is_manager %}
                 <li class="has_submenu {% block info_mana_active %}{% endblock %}">
                     <a href="javascript:;">
-                        <i class="iconfont icon-rizhishenji"></i>学校专业信息
+                        <i class="iconfont icon-rizhishenji"></i>专业班级信息
                         <span class="pull-right"><i class="iconfont icon-xiala-"></i></span>
                     </a>
                     <ul class="sub-menu">
-                    {% comment %} #TODO {% endcomment %}
                     {% comment %} 只有班级管理员可以看到此菜单，此菜单下进行班级人员和班级信息的管理【复用】 {% endcomment %}
-                    {% if perms.Information.view_cla_mate or request.user.userprofile.is_cla_manager %}
+                    {% if perms.Information.view_cla or request.user.userprofile.is_cla_manager %}
                         <li class={% block info_profession_active %}{% endblock %}>
-                            <a href="/info/ais_classmate_view/">管理专业<i class="fa fa-chevron-right pull-right"></i></a>
+                            <a href="/info/ais_profession_view/">管理专业<i class="fa fa-chevron-right pull-right"></i></a>
                         </li>
                         <li class={% block info_cla_active %}{% endblock %}>
-                            <a href="/info/ais_classmate_view/">管理班级<i class="fa fa-chevron-right pull-right"></i></a>
+                            <a href="/info/ais_cla_view/">管理班级<i class="fa fa-chevron-right pull-right"></i></a>
                         </li>
                     {% endif %}
                     </ul>
                 </li>
             {% endif %}
 
-            {% if perms.Information.view_cla_mate or request.user.userprofile.is_manager %}
+            {% if perms.Information.view_classmate or request.user.userprofile.is_manager %}
                 <li class="has_submenu {% block info_active %}{% endblock %}">
                     <a href="javascript:;">
                         <i class="iconfont icon-rizhishenji"></i>班级管理
                         <span class="pull-right"><i class="iconfont icon-xiala-"></i></span>
                     </a>
                     <ul class="sub-menu">
-                    {% if perms.Information.view_cla_mate or request.user.userprofile.is_manager %}
-                        <li class={% block talk_cla_mate_active %}{% endblock %}>
-                            <a href="/info/ais_classmate_view/">班级留言录<i class="fa fa-chevron-right pull-right"></i></a>
+                    {% if perms.Information.view_classmate or request.user.userprofile.is_manager %}
+                        <li class={% block info_msg_active %}{% endblock %}>
+                            <a href="/info/ais_msg_view/">班级留言录<i class="fa fa-chevron-right pull-right"></i></a>
                         </li>
-                        <li class={% block info_cla_mate_active %}{% endblock %}>
+                        <li class={% block info_classmate_active %}{% endblock %}>
                             <a href="/info/ais_classmate_view/">班级成员信息<i class="fa fa-chevron-right pull-right"></i></a>
                         </li>
                     {% endif %}

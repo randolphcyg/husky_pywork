@@ -1,31 +1,9 @@
-'''
-@Author: randolph
-@Date: 2020-07-01 03:38:12
-@LastEditors: randolph
-@LastEditTime: 2020-07-03 12:08:44
-@version: 1.0
-@Contact: cyg0504@outlook.com
-@Descripttion: 
-'''
 from django.db import models
 from django.utils import timezone
 
 from apps.User.models import UserProfile
 
 # Create your models here.
-
-
-class AisClassmate(models.Model):
-    classmate = models.ForeignKey(UserProfile, models.DO_NOTHING)
-    classmate_desc = models.TextField()
-
-    class Meta:
-        db_table = 'ais_classmate'
-        permissions = (
-            ('view_ais_classmate', 'View ais_classmate'),
-            ('modify_ais_classmate', 'Modify ais_classmate'),
-        )
-        verbose_name = 'cla_mate数据'
 
 class AisCla(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -38,10 +16,11 @@ class AisCla(models.Model):
         
 class AisMsg(models.Model):
     id = models.IntegerField(primary_key=True)
-    msg_publish_date = models.DateField(blank=True, null=True)
+    msg_publish_date = models.DateTimeField(blank=True, null=True)
     msg_content = models.CharField(max_length=255, blank=True, null=True)
-    user_id = models.IntegerField(blank=True, null=True)
-
+    user = models.ForeignKey(UserProfile, related_name='user', on_delete=models.CASCADE, default='')
+    cla = models.ForeignKey(UserProfile, related_name='msg', on_delete=models.CASCADE, default='')
+    
     class Meta:
         db_table = 'ais_msg'
         verbose_name = '留言表'

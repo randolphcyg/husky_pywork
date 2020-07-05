@@ -7,11 +7,11 @@
     open
 {% endblock %}
 
-{% block talk_cla_mate_active %}
+{% block info_msg_active %}
     "current active"
 {% endblock %}
 
-{% block info_cla_mate_active %}
+{% block info_classmate_active %}
     "current active"
 {% endblock %}
 
@@ -42,17 +42,23 @@
                 <thead>
                 <tr class="active center_tr">
                     <th style="width:5%">序号</th>
-                    <th style="width:20%">姓名</th>
-                    <th style="width:75%">个人简介</th>
+                    <th style="width:10%">班级</th>
+                    <th style="width:10%">姓名</th>
+                    <th style="width:10%">操作</th>
                 </tr>
                 </thead>
 
                 {% for v, index in zip_obj %}
                     <tbody id="data">
                     <tr style="display: table-row; opacity: 1; text-align: center">
-                        <td class="active"><span class="text-darker classmate_id">{{ index }}</span></td>
-                        <td class="info"><span class="text-dark classmate_id">{{ v.classmate_id|default:"无" }}</span></td>
-                        <td class="danger"><span class="text-dark cm_desc">{{ v.classmate_desc|default:"无" }}</span></td>
+                        <td class="active"><span class="text-darker cla_id">{{ index }}</span></td>
+                        <td class="danger"><span class="text-dark cla_name">{{ v.cla |default:"无" }}</span></td>
+                        <td class="info"><span class="text-dark user_real_name">{{ v.user_real_name|default:"无" }}</span></td>
+                        <td>
+                            <button type="button" class="btn btn-danger clean_user"
+                                    data-placement="bottom" style="border-radius: 7px">踢出班级
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 {% endfor %}
@@ -124,6 +130,20 @@
         </div>
     </div>
     <script type="text/javascript">
+    // 拒绝
+    $('.clean_user').click(function () {
+        var user_real_name = $(this).parents("tr").find(".user_real_name").text();
+        
+        data = {"user_real_name": user_real_name,};
+        $.post("{% url 'clean_user' %}", data, function (res) {
+            if (res == "success") {
+                window.location.reload();
+            } else {
+                result = JSON.parse(res)
+                alert(result.result)
+            }
+        })
+    });
     // 触发气泡
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()

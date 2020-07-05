@@ -1,12 +1,3 @@
-'''
-@Author: randolph
-@Date: 2020-07-01 03:38:12
-@LastEditors: randolph
-@LastEditTime: 2020-07-03 12:12:16
-@version: 1.0
-@Contact: cyg0504@outlook.com
-@Descripttion: 
-'''
 # -*- coding : utf-8 -*-
 import json
 import os
@@ -22,7 +13,7 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
-from apps.Information.models import AisClassmate
+from apps.Information.models import *
 from apps.User.models import UserProfile
 
 # Create your views here.
@@ -35,23 +26,139 @@ PAGE_SIZE = 10                  # 每页显示行数
 @transaction.atomic
 @login_required(login_url="/login/")
 def ais_classmate_view(request):
-    # classmate_id = int(request.GET.get("classmate_id", ""))
+    current_user = request.user         # 当前登录用户
+    # print(current_user)
+    classmate_name = request.GET.get("classmate_id", "")
     page = int(request.GET.get("page", 1))
     keys = ""   # 搜索参数
     search = dict()
-    search["user_id__contains"] = 8
-    # if classmate_id:
-    #     search["classmate_id__contains"] = classmate_id
-    #     keys += "classmate_id=" + classmate_id + "&"
-    # user_profile = UserProfile.objects.get(user_id=8)
-    user_profile = UserProfile.objects.filter(**search).order_by('-user_id')
-    # ais_classmate = AisClassmate.objects.filter(**search).order_by('-id')      # 根据st_id倒序
+    user_profile_base = UserProfile.objects.get(auth_user=current_user)
+    # print(user_profile.cla_id)        # 当前登录用户所在班级
+    search["cla_id"] = str(user_profile_base.cla_id)
+    keys += "cla_id=" + str(user_profile_base.cla_id) + "&"
+    # if classmate_name:
+    #     search["cla_name__contains"] = classmate_name
+    #     keys += "cla_name=" + classmate_name + "&"
+    user_profile = UserProfile.objects.filter(**search).exclude(auth_user=current_user).order_by('-user_id')        # 排除自己
+    # user_profile = UserProfile.objects.filter(**search).order_by('-user_id')
+    # ais_cla = AisCla.objects.filter(**search).order_by('-id')      # 根据st_id倒序
     # 调用自定义分页方法
     zip_obj, pages, page_obj, page, paginator = paginator_interface(user_profile, page, TABLE_SIZE)
     return render(request, 'classmates.html', {"page_obj": page_obj, 'zip_obj': zip_obj, "keys": keys,
                                                'page': page, 'paginator': paginator, 'pages': pages})
 
 
+@csrf_exempt
+@transaction.atomic
+@login_required(login_url="/login/")
+def ais_msg_view(request):
+    current_user = request.user         # 当前登录用户
+    user_profile_base = UserProfile.objects.get(auth_user=current_user)  
+      
+    msg_content = request.GET.get("msg_content", "")
+    page = int(request.GET.get("page", 1))
+    keys = ""   # 搜索参数
+    search = dict()
+    search["cla_id"] = str(user_profile_base.cla_id)        # 当前登录用户所在班级 去过滤留言
+    keys += "cla_id=" + str(user_profile_base.cla_id) + "&"
+    if msg_content:
+        search["msg_content__contains"] = msg_content
+        keys += "msg_content=" + msg_content + "&"
+    ais_msg = AisMsg.objects.filter(**search).order_by('-id')
+    # 调用自定义分页方法
+    zip_obj, pages, page_obj, page, paginator = paginator_interface(ais_msg, page, TABLE_SIZE)
+    return render(request, 'msg.html', {"page_obj": page_obj, 'zip_obj': zip_obj, "keys": keys,
+                                        'page': page, 'paginator': paginator, 'pages': pages})
+
+
+@csrf_exempt
+@login_required(login_url="/login/")
+@transaction.atomic
+def clean_user(request):
+    if request.method == "GET":
+        return HttpResponse("Nothing...")
+    if request.method == "POST":
+        user_real_name = request.POST.get("user_real_name", "")
+        user_profile = UserProfile.objects.get(user_real_name=user_real_name)
+        user_profile.cla_id = 0  # 班级清空     # ais_cla预留一个班级id为0的用来存放无班级用户
+        user_profile.save()
+        return HttpResponse(content="success")
+
+@csrf_exempt
+@login_required(login_url="/login/")
+@transaction.atomic
+def publish_msg(request):
+    if request.method == "GET":
+        return HttpResponse("Nothing...")
+    if request.method == "POST":
+        current_user = request.user         # 当前登录用户
+        user_profile_base = UserProfile.objects.get(auth_user=current_user)  
+        # 获得前端传过来的数据
+        pub_msg_content = request.POST.get("pub_msg_content", "")
+        print(pub_msg_content)
+        ais_msg = AisMsg()
+        ais_msg.msg_content = pub_msg_content
+        ais_msg.cla_id = user_profile_base.cla_id
+        ais_msg.user_id = user_profile_base.user_id
+        ais_msg.save()
+        # user_profile = UserProfile.objects.get(auth_user=username)
+        # user_profile.cla_id = 0  # 班级清空     # ais_cla预留一个班级id为0的用来存放无班级用户
+        # user_profile.save()
+        return HttpResponse(content="success")
+
+@csrf_exempt
+@transaction.atomic
+@login_required(login_url="/login/")
+def ais_cla_view(request):      
+    cla_name = request.GET.get("cla_name", "")
+    page = int(request.GET.get("page", 1))
+    keys = ""   # 搜索参数
+    search = dict()
+    if cla_name:
+        search["cla_name__contains"] = cla_name
+        keys += "cla_name=" + cla_name + "&"
+    ais_cla = AisCla.objects.filter(**search).exclude(id=0).order_by('-id')
+    # 调用自定义分页方法
+    zip_obj, pages, page_obj, page, paginator = paginator_interface(ais_cla, page, TABLE_SIZE)
+    return render(request, 'cla.html', {"page_obj": page_obj, 'zip_obj': zip_obj, "keys": keys,
+                                        'page': page, 'paginator': paginator, 'pages': pages})
+    
+    
+@csrf_exempt
+@transaction.atomic
+@login_required(login_url="/login/")
+def ais_profession_view(request):      
+    profession_name = request.GET.get("profession_name", "")
+    page = int(request.GET.get("page", 1))
+    keys = ""   # 搜索参数
+    search = dict()
+    if profession_name:
+        search["profession_name__contains"] = profession_name
+        keys += "profession_name=" + profession_name + "&"
+    ais_profession = AisProfession.objects.filter(**search).order_by('id')
+    # 调用自定义分页方法
+    zip_obj, pages, page_obj, page, paginator = paginator_interface(ais_profession, page, TABLE_SIZE)
+    return render(request, 'profession.html', {"page_obj": page_obj, 'zip_obj': zip_obj, "keys": keys,
+                                        'page': page, 'paginator': paginator, 'pages': pages})    
+
+
+@csrf_exempt
+@login_required(login_url="/login/")
+@transaction.atomic
+def join_cla(request):
+    if request.method == "GET":
+        return HttpResponse("Nothing...")
+    if request.method == "POST":
+        current_user = request.user         # 当前登录用户
+        # 获得前端传过来的数据
+        cla_name = request.POST.get("cla_name", "")
+        ais_cla_base = AisCla.objects.get(cla_name=cla_name)  
+        print(ais_cla_base.id)
+        user_profile = UserProfile.objects.get(auth_user=current_user)
+        user_profile.cla_id = ais_cla_base.id
+        user_profile.save()
+        return HttpResponse(content="success")
+    
 
 def paginator_interface(object_list, page, table_size):
     """

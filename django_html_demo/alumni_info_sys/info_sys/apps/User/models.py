@@ -2,6 +2,8 @@
 # -*- encoding: utf-8 -*-
 from django.contrib.auth.models import User
 from django.db import models
+# from apps.Information.models import AisCla
+
 
 # Create your models here.
 
@@ -28,6 +30,7 @@ class UserProfile(models.Model):
     university_id = models.IntegerField(blank=True, null=True)
     procession_id = models.IntegerField(blank=True, null=True)
     cla_id = models.IntegerField(blank=True, null=True)
+    # fk_user_cla = models.ForeignKey(apps.Information.models.AisCla, related_name='user_cla', on_delete=models.CASCADE, default='')
 
     class Meta:
         db_table = 'user_profile'
