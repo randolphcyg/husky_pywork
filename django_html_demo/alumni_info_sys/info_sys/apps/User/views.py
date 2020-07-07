@@ -13,6 +13,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 
 from apps.User.models import UserProfile
+from apps.Information.models import AisCla
 
 # Create your views here.
 TABLE_SIZE = 5                      # 注册审批页面表格行数
@@ -53,6 +54,10 @@ def user_profile_view(request):
     user = User.objects.get(username=request.user.username)
     try:
         user_profile = UserProfile.objects.get(auth_user=user)
+        print(user_profile.cla_id)
+        # ais_cla = AisCla.objects.filter(user=user_profile.cla_id) # 外键没成功！！TODO
+        # print(ais_cla.cla_name)
+        # ais_cla = AisCla.ais_cla_set.all()
     except Exception as e:
         if user.is_superuser:
             user_profile = {
@@ -63,12 +68,14 @@ def user_profile_view(request):
                 "email": user.email,
                 'is_cla_manager': '1',
                 "user_stu_num": "123456",
-                'user_desc': "此人乃超级管理员，拥有管理系统至高无上的权限！", 
+                'user_desc': "此人乃超级管理员，拥有管理系统至高无上的权限！",
             }
         else:
             return redirect("/login/")
-    return render(request, 'index.html',
-                  {"user": user, "user_profile": user_profile, })
+    return render(request, 'index.html', {"user": user,
+                                          "user_profile": user_profile,
+                                        #   "ais_cla": ais_cla
+                                          })
 
 
 @csrf_exempt
@@ -163,6 +170,7 @@ def reject_user(request):
         user_profile.save()
         return HttpResponse(content="success")
 
+
 @csrf_exempt
 @login_required(login_url="/login/")
 @transaction.atomic
@@ -198,6 +206,7 @@ def change_pwd(request):
         user.save()
     return HttpResponse(content="success")
 
+
 @csrf_exempt
 @login_required(login_url="/login/")
 @transaction.atomic
@@ -221,7 +230,7 @@ def modify_info(request):
             user.email = email
         if user_desc:
             user_profile.user_desc = user_desc
-        if user_real_name:     
+        if user_real_name:
             user_profile.user_real_name = user_real_name
         if user_stu_num:
             user_profile.user_stu_num = user_stu_num

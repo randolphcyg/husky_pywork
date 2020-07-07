@@ -59,8 +59,8 @@ def ais_msg_view(request):
     page = int(request.GET.get("page", 1))
     keys = ""   # 搜索参数
     search = dict()
-    search["cla_id"] = str(user_profile_base.cla_id)        # 当前登录用户所在班级 去过滤留言
-    keys += "cla_id=" + str(user_profile_base.cla_id) + "&"
+    search["id"] = str(user_profile_base.cla_id)        # 当前登录用户所在班级 去过滤留言
+    keys += "id=" + str(user_profile_base.cla_id) + "&"
     if msg_content:
         search["msg_content__contains"] = msg_content
         keys += "msg_content=" + msg_content + "&"
@@ -95,15 +95,18 @@ def publish_msg(request):
         user_profile_base = UserProfile.objects.get(auth_user=current_user)  
         # 获得前端传过来的数据
         pub_msg_content = request.POST.get("pub_msg_content", "")
-        print(pub_msg_content)
-        ais_msg = AisMsg()
-        ais_msg.msg_content = pub_msg_content
-        ais_msg.cla_id = user_profile_base.cla_id
-        ais_msg.user_id = user_profile_base.user_id
-        ais_msg.save()
-        # user_profile = UserProfile.objects.get(auth_user=username)
-        # user_profile.cla_id = 0  # 班级清空     # ais_cla预留一个班级id为0的用来存放无班级用户
-        # user_profile.save()
+        try:
+            ais_msg = AisMsg()
+            ais_msg.msg_content = pub_msg_content
+            # ais_msg.cla_id = user_profile_base.cla_id
+            # ais_msg.user_id = user_profile_base.user_id
+            user_profile = UserProfile.objects.get(auth_user=current_user)
+            user_profile.cla_id = 0  # 班级清空     # ais_cla预留一个班级id为0的用来存放无班级用户
+            user_profile.save()
+            ais_msg.save()
+        except Exception as e:
+            print(e)
+        
         return HttpResponse(content="success")
 
 @csrf_exempt

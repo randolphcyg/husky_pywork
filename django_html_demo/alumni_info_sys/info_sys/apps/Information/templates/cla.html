@@ -124,14 +124,20 @@
     $('.join_cla').click(function () {
         var cla_name = $(this).parents("tr").find(".cla_name").text();
         data = {"cla_name": cla_name,};
-        $.post("{% url 'join_cla' %}", data, function (res) {
+        if (request.user==cla_name){
+            alert("您已加入班级，无需重复加入!");
+        } else {
+            $.post("{% url 'join_cla' %}", data, function (res) {
             if (res == "success") {
+                alert("申请加入班级成功！请等候班级管理员审批通过")
                 window.location.reload();
             } else {
                 result = JSON.parse(res)
                 alert(result.result)
-            }
-        })
+                }
+            })
+        }
+        
     });
     // 触发气泡
     $(function () {

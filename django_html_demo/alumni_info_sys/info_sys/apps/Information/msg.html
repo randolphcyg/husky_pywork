@@ -123,11 +123,7 @@
     <script type="text/javascript">
     // 发表留言
     $('.publish_msg').click(function () {
-        // var pub_msg_content = $('input[name="pub_msg_content"]:checked').val();
-        var pub_msg_content = $('pub_msg_content').text();
-        
-        //$('input:text:pub_msg_content').val();
-        console.log(pub_msg_content);
+        var pub_msg_content = $('#pub_msg_content').val();
         data = {"pub_msg_content": pub_msg_content,};
         $.post("{% url 'publish_msg' %}", data, function (res) {
             if (res == "success") {

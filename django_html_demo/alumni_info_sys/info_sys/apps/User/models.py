@@ -1,3 +1,12 @@
+'''
+@Author: randolph
+@Date: 2020-07-01 03:38:12
+@LastEditors: randolph
+@LastEditTime: 2020-07-06 22:59:45
+@version: 1.0
+@Contact: cyg0504@outlook.com
+@Descripttion: 
+'''
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 from django.contrib.auth.models import User
@@ -30,7 +39,6 @@ class UserProfile(models.Model):
     university_id = models.IntegerField(blank=True, null=True)
     procession_id = models.IntegerField(blank=True, null=True)
     cla_id = models.IntegerField(blank=True, null=True)
-    # fk_user_cla = models.ForeignKey(apps.Information.models.AisCla, related_name='user_cla', on_delete=models.CASCADE, default='')
 
     class Meta:
         db_table = 'user_profile'

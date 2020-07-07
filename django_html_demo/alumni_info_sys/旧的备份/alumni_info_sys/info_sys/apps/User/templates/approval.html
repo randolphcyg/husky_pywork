@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load static %}
+
+<link href='{% static "iconfont/iconfont.css" %}' rel="stylesheet">
+
+{% block approval_active %}
+    "current active"
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="col-md-12" style="font-size: larger">
+                <span class="right-title-border-name">&ensp;
+                    <i class="iconfont icon-quanxianguanli"></i>&ensp;
+                    <strong class="king-header-red">注册申请列表</strong>
+                </span>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel-btns form-group">
+            <div class="row">
+                <form class="">
+                <div class="col-md-2"><input name="username" type="text" class="form-control" placeholder="用户名"></div>
+                <div class="col-md-2"><input name="user_real_name" type="text" class="form-control" placeholder="姓名"></div>
+                <div class="col-md-2"><input name="email" type="text" class="form-control" placeholder="邮箱"></div>
+                <div class="col-md-1"><input class="king-btn king-radius king-primary"  type="submit" value="搜索"></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="panel panel-default pannel-overflow panel-tables">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="active center_tr">
+                        <th style="width:5%" class="checkboxAll"><input type="checkbox"></th>
+                        <th style="width:5%">用户名</th>
+                        <th style="width:10%">姓名</th>
+                        <th style="width:15%">邮箱</th>
+                        <th style="width:15%">学校</th>
+                        <th style="width:15%">专业</th>
+                        <th style="width:15%">班级</th>
+                        <th style="width:20%">操作</th>
+                    </tr>
+                </thead>
+
+                <tbody id="data">
+                    {% for col, index in zip_obj %}
+                    <tr style="display: table-row; opacity: 1; text-align: center">
+                        <td class="checkboxOne"><input type="checkbox"></td>
+                        <td><span class="text-dark username">{{ col.auth_user.username }}</span></td>
+                        <td><span class="text-dark user_real_name">{{ col.user_real_name }}</span></td>
+                        <td><span class="text-dark email">{{ col.auth_user.email }}</span></td>
+                        <td><span class="text-dark university">{{ col.university }}</span></td>
+                        <td><span class="text-dark profession">{{ col.profession | default:"暂未加入" }}</span></td>
+                        <td><span class="text-dark cla">{{ col.cla | default:"暂未加入" }}</span></td>
+                        <td>
+                            <button type="button" class="btn btn-danger reject_user" data-toggle="tooltip"
+                                    data-placement="bottom" style="border-radius: 7px"
+                                    title="信息错误，拒绝批准！">拒绝
+                            </button>
+                            <button type="button" class="btn btn-warning pass_manager_user" data-toggle="tooltip"
+                                    data-placement="top" style="border-radius: 7px" title="批准注册！">批准
+                            </button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="">
+                                <button type="button" class="btn btn-info batch_approval" data-toggle="tooltip" data-placement="top"
+                                            style="border-radius: 7px" >批量批准</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="8">
+                            <div id="pages" class="text-center">
+                                <nav>
+                                    <ul class="pagination">
+                                        {% if profile_obj.has_previous %}
+                                            <li><a class='active' href="?page={{ profile_obj.previous_page_number }}&{{ keys }}">
+                                                <span aria-hidden="true">&laquo;</span></a></li>
+                                        {% endif %}
+
+                                        {% for num in paginator.page_range %}
+                                            {% if num == current_page %}
+                                                <li class="item active"><a href="/user/approval/?page={{ num }}&{{ keys }}">{{ num }}</a></li>
+                                            {% else %}
+                                                <li class="item"><a href="/user/approval/?page={{ num }}&{{ keys }}">{{ num }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {% if profile_obj.has_next %}
+                                            <li><a class='active' href="?page={{ profile_obj.next_page_number }}&{{ keys }}">
+                                                <span aria-hidden="true">&raquo;</span></a></li>
+                                        {% endif %}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="row">
+                <div class="king-instruction king-instruction-info space_between">
+                    <h5 style="color: black">操作说明：</h5>
+                    <p class="text text-danger">1.拒绝：该用户填写信息不合格，拒绝通过其注册！</p>
+                    <p class="text text-info">2.批准：批准该注册用户成为普通用户</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    // 拒绝
+    $('.reject_user').click(function () {
+        var username = $(this).parents("tr").find(".username").text();
+        var user_real_name = $(this).parents("tr").find(".user_real_name").text();
+        var email = $(this).parents("tr").find(".email").text();
+        data = {"username": username, "user_real_name": user_real_name, "email": email};
+        $.post("{% url 'reject_user' %}", data, function (res) {
+            if (res == "success") {
+                window.location.reload();
+            } else {
+                result = JSON.parse(res)
+                alert(result.result)
+            }
+        })
+    });
+    $('.batch_approval').click(function () {
+        $checkedbox = $(".checkboxOne input:checked")
+        username_list = []
+        for(i=0; i<$checkedbox.length;i++){
+            username =$($checkedbox[i]).parents("tr").find(".username").text()
+            username_list.push(username)
+        }
+        data={"username_list": JSON.stringify(username_list)}
+        $.post("{% url 'pass_manager_user' %}", data, function (res) {
+            if (res == "success") {
+                window.location.reload();
+            } else {
+                result = JSON.parse(res)
+                alert(result.result)
+            }
+        })
+    })
+    // 批准
+    $('.pass_manager_user').click(function () {
+        var username = $(this).parents("tr").find(".username").text();
+        var user_real_name = $(this).parents("tr").find(".user_real_name").text();
+        var email = $(this).parents("tr").find(".email").text();
+        data = {"username": username, "user_real_name": user_real_name, "email": email};
+        $.post("{% url 'pass_manager_user' %}", data, function (res) {
+            if (res == "success") {
+                window.location.reload();
+            } else {
+                result = JSON.parse(res)
+                alert(result.result)
+            }
+        })
+    });
+    // 触发气泡
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    // 搜索
+    $('.search').click(function () {
+        alert('搜索')
+        var search_content = $(this).parent().find(".search_content").val();
+        console.log(search_content)
+    })
+    </script>
+{% endblock %}

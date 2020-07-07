@@ -9,6 +9,7 @@ class AisCla(models.Model):
     id = models.IntegerField(primary_key=True)
     cla_name = models.CharField(max_length=255, blank=True, null=True)
     cla_desc = models.TextField(blank=True, null=True)
+    # cla = models.ForeignKey(UserProfile, related_name='user', on_delete=models.CASCADE, default='')
 
     class Meta:
         db_table = 'ais_cla'
@@ -18,8 +19,7 @@ class AisMsg(models.Model):
     id = models.IntegerField(primary_key=True)
     msg_publish_date = models.DateTimeField(blank=True, null=True)
     msg_content = models.CharField(max_length=255, blank=True, null=True)
-    user = models.ForeignKey(UserProfile, related_name='user', on_delete=models.CASCADE, default='')
-    cla = models.ForeignKey(UserProfile, related_name='msg', on_delete=models.CASCADE, default='')
+    msg = models.ForeignKey(UserProfile, related_name='msg', on_delete=models.CASCADE, default='')
     
     class Meta:
         db_table = 'ais_msg'
