@@ -1,23 +1,13 @@
 [[source]]
 name = "pypi"
-url = "https://pypi.tuna.tsinghua.edu.cn/simple/"
+url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+autopep8 = "*"
 
 [packages]
 pandas = "*"
-jieba = "*"
-requests = "*"
-lxml = "*"
-xlrd = "*"
-openpyxl = "*"
-scrapy = "*"
-pymongo = "*"
-matplotlib = "*"
-lmfit = "*"
-scipy = "*"
-bs4 = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.8"

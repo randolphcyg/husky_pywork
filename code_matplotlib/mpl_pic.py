@@ -95,32 +95,31 @@ def pic_3():
 
 def pic_4():
     '''图四 饼图
+    用了apply方法将df数据某一列元素转换成浮点数
     '''
+    def convert2int(d: str) -> float:
+        # print(d)
+        return float(d.split(' ')[0].split('$')[1])
+
     import pandas as pd
     ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
     src_file = os.path.join(ROOT_PATH, "2012-19sport.csv")           # 绝对路径拼接
     file = pd.read_csv(src_file)
     df = pd.DataFrame(file)
     df_2013 = df[df['Year'] == 2013]      # 选取Year列为2013的数据
-    # print(df_2013.iloc[0])
-    rank, names, pay, salary, endorsements, sport, year = df_2013['Rank'], df_2013['Name'], df_2013['Pay'], 
-    df_2013['Salary/Winnings'], df_2013['Endorsements'], df_2013['Sport'], df_2013['Year']
-    # 需要计算
-    x=df['2013年体育项目收入']
-    
-    explode=(0.1,0,0,0,0,0,0,0,0,0)
-    plt.pie(x,labels=names,explode=explode,startangle=60,autopct='%1.1f%%')
-    plt.axis("equal")
-    plt.title('国民总收入')
-    plt.show()
+    # 将 Endorsements 列处理成浮点数
+    df_2013['Endorsements'] = df_2013['Endorsements'].apply(lambda x: convert2int(x))
+    endorsements = df_2013.groupby(by='Sport')['Endorsements'].sum()
 
-    # sizes = [16,14,7,4,3,30]
-    # plt.pie(sizes)
-    # plt.show()
+    names = endorsements.index.to_list()
+    # explode = [x / sum(endorsements) for x in endorsements]
+    plt.pie(x=endorsements.to_list(), labels=names, startangle=60, autopct='%1.1f%%')  # explode=explode,
+    plt.title('2013年球类收入饼图')
+    plt.show()
 
 
 if __name__ == "__main__":
     # pic_1()
-    pic_2()
+    # pic_2()
     # pic_3()
-    # pic_4()
+    pic_4()

@@ -17,7 +17,7 @@ np.random.seed(0)       # 如果想得到固定的随机数，种子可以给相
 number = 100 * np.random.normal(0, 1, len(date))        # 生成符合正态分布的随机数
 
 x = np.array(range(0, 91))
-y = itp.interp1d(date, number, kind="cubic")        # 用 quadratic 插值(2阶B样条曲线插值)或者 cubic
+y = itp.interp1d(date, number, kind="cubic")            # 用 quadratic 插值(2阶B样条曲线插值)或者 cubic
 y2 = y(x)
 plt.plot(date, number, "*", x, y2)                      # 绘图
 plt.show()

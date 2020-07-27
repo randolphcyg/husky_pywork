@@ -1,16 +1,7 @@
-<!--
- * @Author: randolph
- * @Date: 2020-06-01 23:55:30
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2020-07-01 11:43:54
- * @version: 1.0
- * @Contact: cyg0504@outlook.com
- * @Descripttion: 
---> 
 # husky_pywork
 
 ### 1.介绍
-用来记录自己与python学友共同完成的有意思的问题~
+husky_pywork主要记录小的不需要长期迭代的项目，主要涉及`tkinter`、`matplotlib`、`pandas`数据处理内容, 另外还有django的待完善web;
 
 ### 2.软件架构
 
@@ -18,19 +9,15 @@
 | ------- | --------------------------------------- |
 | python3 | 主要编程语言                            |
 | jieba   | 自然语言处理库(中文最好的处理工具)      |
-| pandas  | 代替python的原生文件读取包,提高处理效率 |
+| pandas  | 数据处理库 |
+| numpy  | 数学库 |
+| matplotlib  | 绘图库 |
 
 ### 3.安装教程
-#### 1.python3安装后，使用全局环境即可;
-#### 2.需要配置pip的国内源
-位置`C:\Users\<用户名>\AppData\Roaming\pip\`
-下创建`pip.ini`文件，内容为
-`[global] 
-timeout = 6000 
-index-url = https://pypi.tuna.tsinghua.edu.cn/simple
-[install]
-trusted-host = https://pypi.tuna.tsinghua.edu.cn`
-#### 3.打开cmd安装其他所需的三方库：
+
+#### 3.1.[python环境配置](https://blog.csdn.net/qq_33997198/article/details/107420579)
+
+#### 3.2.pipenv虚拟环境安装依赖：
 全局安装pipenv
 `pip install pipenv`
 用pipenv的锁文件安装依赖
@@ -42,9 +29,11 @@ trusted-host = https://pypi.tuna.tsinghua.edu.cn`
 
 | 模块                      | 描述                                                         |
 | ------------------------- | ------------------------------------------------------------ |
-| handle_excel              | pandas处理表格的例子(原始文件未上传、需要安装pandas)         |
-| poem_300                  | [用jieba和re分析唐诗三百首的小题目](https://blog.csdn.net/qq_33997198/article/details/106493983)(需要安装jieba库) |
-| handle_tk_gui             | [python3 tkinter和pandas完成学生信息管理系统(详解)](https://blog.csdn.net/qq_33997198/article/details/106535544) |
-| handle_txt                | 用来存放只对字符串和txt文件处理的代码                        |
-| handle_matplotlib_pic     | [matplotlib作图实例](https://blog.csdn.net/qq_33997198/article/details/106663268) |
-| django_html_demo/info_sys | [django应用——GP信息系统&校友录系统](https://blog.csdn.net/qq_33997198/article/details/107039610)【因安全原因、仅粉丝可见】 |
+| code_excel              | pandas处理表格的例子(原始文件未上传、需要安装pandas)         |
+| poem                  | [用jieba和re分析唐诗三百首的小题目](https://blog.csdn.net/qq_33997198/article/details/106493983)(需要安装jieba库) |
+| sims_tk             | [python3 tkinter和pandas完成学生信息管理系统(详解)](https://blog.csdn.net/qq_33997198/article/details/106535544) |
+| code_txt                | 用来存放只对字符串和txt文件处理的代码                        |
+| code_matplotlib     | [matplotlib作图实例](https://blog.csdn.net/qq_33997198/article/details/106663268) |
+| django_html_demo/info_sys | [django应用——GP信息系统&校友录系统](https://blog.csdn.net/qq_33997198/article/details/107039610) |
+| stock_spider | [python股票爬虫可视化](https://blog.csdn.net/qq_33997198/article/details/107325441) |
+| sims_cmd | [python3学生信息管理系统-CMD版本](https://blog.csdn.net/qq_33997198/article/details/107181444) |

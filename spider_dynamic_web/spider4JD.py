@@ -95,19 +95,21 @@ def item_comments(url, head):
     req.encoding = 'utf-8'
     print(req.text)
     item_comments_html = etree.HTML(req.text)
-    
+
     # 定位到每一个商品标签li
     item_comments_datas = item_comments_html.xpath('//div[contains(@class,"comment-item")]')
     print(item_comments_datas)
     # for i, data in enumerate(item_comments_datas):
     #     p_name = data.xpath('div/div[@class="p-name p-name-type-2"]/a/em/text()')[0]
     return item_comments_list
-    
+
+
 def analysis_JD_info():
     df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
-    mean_price = df.mean(axis = 0)      # 手机均价
+    mean_price = df.mean(axis=0)      # 手机均价
     print(mean_price)
-    
+
+
 if __name__ == '__main__':
     # 新建空表格文件
     is_exist = os.path.exists(output_file)
