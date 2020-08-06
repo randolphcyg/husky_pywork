@@ -42,7 +42,7 @@ def crow_first(n):
     html1 = etree.HTML(r.text)
     # 定位到每一个商品标签li
     datas = html1.xpath('//li[contains(@class,"gl-item")]')
-    df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+    df = pd.read_excel(output_file)    # 读取源文件
     for i, data in enumerate(datas):
         p_name = data.xpath('div/div[@class="p-name p-name-type-2"]/a/em/text()')[0]
         p_price = data.xpath('div/div[@class="p-price"]/strong/i/text()')[0]
@@ -75,7 +75,7 @@ def crow_first(n):
 #     html1 = etree.HTML(r.text)
 #     # 定位到每一个商品标签li
 #     datas = html1.xpath('//li[contains(@class,"gl-item")]')
-#     df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+#     df = pd.read_excel(output_file)    # 读取源文件
 #     for i, data in enumerate(datas):
 #         p_name = data.xpath('div/div[@class="p-name p-name-type-2"]/a/em/text()')[0]
 #         p_price = data.xpath('div/div[@class="p-price"]/strong/i/text()')[0]
@@ -105,7 +105,7 @@ def item_comments(url, head):
 
 
 def analysis_JD_info():
-    df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+    df = pd.read_excel(output_file)    # 读取源文件
     mean_price = df.mean(axis=0)      # 手机均价
     print(mean_price)
 

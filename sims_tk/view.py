@@ -157,7 +157,7 @@ class InputFrame(Frame):                # 继承 Frame 类
         '''
         num, name, cla, gender, sub1, sub2, sub3, sub4, sub5, sub6 = self.vaild_data()
         # 写数据之前作已有数据校验
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         nums_list = df.iloc[:, 0].values.tolist()       # 先查出学号，判断改学生是否已经存数据
         if num in nums_list:
@@ -297,7 +297,7 @@ class DelFrame(Frame):
         elif name:
             self.var_name.set(name)
 
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         names_list = df.iloc[:, 1].values.tolist()      # 姓名列表
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
@@ -338,7 +338,7 @@ class DelFrame(Frame):
         还可以优化运行速度和判断逻辑
         '''
         name = self.var_name.get()
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         names_list = df.iloc[:, 1].values.tolist()      # 姓名列表
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
@@ -512,7 +512,7 @@ class UpdateFrame(Frame):
         elif name:
             self.var_name.set(name)
 
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         names_list = df.iloc[:, 1].values.tolist()      # 姓名列表
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表
@@ -595,7 +595,7 @@ class UpdateFrame(Frame):
         '''
         num, name, cla, gender, sub1, sub2, sub3, sub4, sub5, sub6 = self.vaild_data()
         # 写数据之前作已有数据校验
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         nums_list = df.iloc[:, 0].values.tolist()       # 先查出学号，判断改学生是否已经存数据
         if num in nums_list:
@@ -742,7 +742,7 @@ class CountFrame(Frame):
         elif name:
             self.var_name.set(name)
 
-        df = pd.read_excel(output_file, encoding='utf-8', error_bad_lines=False)    # 读取源文件
+        df = pd.read_excel(output_file)    # 读取源文件
         row, col = df.shape
         names_list = df.iloc[:, 1].values.tolist()      # 姓名列表
         nums_list = df.iloc[:, 0].values.tolist()       # 学号列表

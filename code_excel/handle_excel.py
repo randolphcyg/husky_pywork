@@ -11,9 +11,9 @@ import pandas as pd
 
 path1 = "F:\\Glacier\\DEM\\a1\\test\\pivo147034.xls"       # 表格1
 path2 = "F:\\Glacier\\DEM\\a1\\test\\pivo148033.xls"       # 表格2
-df1 = pd.read_excel(path1, encoding='utf-8', error_bad_lines=False)           # 读取源文件
+df1 = pd.read_excel(path1)           # 读取源文件
 cols = df1.columns.tolist()      # 取header
-df2 = pd.read_excel(path2, encoding='utf-8', error_bad_lines=False)           # 读取源文件
+df2 = pd.read_excel(path2)           # 读取源文件
 # df1.fillna(0, inplace=True)       # 处理nan 貌似没啥用
 # df2.fillna(0, inplace=True)
 

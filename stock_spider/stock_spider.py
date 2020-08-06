@@ -92,7 +92,7 @@ def del_excel():
 def read_excel():
     '''读取源文件
     '''
-    df = pd.read_excel(EXCEL, encoding='utf-8', error_bad_lines=False, converters={'股票代码': str})
+    df = pd.read_excel(EXCEL, converters={'股票代码': str})
     return df
 
 
@@ -196,7 +196,7 @@ def save_info(info_dict):
         df.to_excel(EXCEL, encoding='utf-8', sheet_name="stocks", index=False)
 
     # 读取源文件
-    df = pd.read_excel(EXCEL, encoding='utf-8', error_bad_lines=False, converters={'股票代码': str})
+    df = pd.read_excel(EXCEL, converters={'股票代码': str})
     row, col = df.shape     # 表格文件现有行列数目
     df.loc[row] = [info_dict['股票代码'],
                    info_dict['股票名称'],
