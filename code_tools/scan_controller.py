@@ -4,8 +4,8 @@ import os
 import re
 
 import pandas as pd
-
-controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-platform\\src\\main\\java\\org\\srm\\platform\\api\\controller\\v1\\"
+controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-interface\\src\\main\\java\\org\\srm\\interfaces\\api\\controller\\v1\\"
+# controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-platform\\src\\main\\java\\org\\srm\\platform\\api\\controller\\v1\\"
 
 # controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-supplier\\src\\main\\java\\org\\srm\\supplier\\api\\controller\\v1\\"
 sheet_name = controllers_root_path.split('\\')[6]       # sheet页命名是类似srm-supplier的服务名
@@ -71,7 +71,7 @@ def save_file(res_dict: dict, path: str = None) -> None:
     df = read_file(path)    # 打开目标文件
     for i, (k, v) in enumerate(res_dict.items()):
         for url, type in zip(v[0], v[1]):
-            df.loc[i] = [k, url, type, None, None, None, None]
+            df.loc[i] = [k, url, type, None, None, '李静玲', None]
     print(df)
     # 检查是否已存在同名sheet页!!
     check_df = pd.read_excel(path, sheet_name=None)
