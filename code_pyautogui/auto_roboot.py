@@ -49,15 +49,20 @@ def auto_send_msg():
     pyautogui.moveTo(x=1100, y=400, duration=0.7)
     pyautogui.click(clicks=1, button='left', interval=0.05)         # 点击
     time.sleep(1)
-    pyautogui.typewrite(message=['english', 'input', 'test'], interval=.5)
-    # input_str = "多喝热水"
-    # for j in range(2):
-    #     for con in input_str:
-    #         pyperclip.copy(con)
-    #         time.sleep(0.09)
-    #         pyautogui.hotkey('ctrl', 'v')
-    #         time.sleep(0.09)
-        # pyautogui.press('enter')
+    pyautogui.typewrite(['t', 'e', 's', 't', 'left', 'left', 'left', 'left', 'M', 'S', 'G'], interval=.2)       # 英文输入
+    pyautogui.press('end')      # end键
+    pyautogui.press('enter')    # enter键
+    pyautogui.keyDown('w')
+    time.sleep(2)
+    pyautogui.keyUp('w')
+    input_str = "多喝热水"
+    for j in range(2):
+        for con in input_str:
+            pyperclip.copy(con)
+            time.sleep(0.09)
+            pyautogui.hotkey('ctrl', 'v')
+            time.sleep(0.09)
+        pyautogui.press('enter')
         # pyautogui.hotkey('ctrl', 'enter')
 
 
