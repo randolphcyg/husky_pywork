@@ -82,19 +82,19 @@ def auto_run():
     # run_img = pyautogui.locateOnScreen("C:\\Users\\randolph\\Desktop\\run.png")
     # print(run_img)
     # pyautogui.moveTo(run_img, duration=.5)
-    # pyautogui.click(clicks=1, button='left', interval=0.05) 
+    # pyautogui.click(clicks=1, button='left', interval=0.05)
     # time.sleep(1)
     # 保存位置
     save_img = pyautogui.locateOnScreen("C:\\Users\\randolph\\Desktop\\save.png")
     print(save_img)
     pyautogui.moveTo(save_img, duration=.5)
-    pyautogui.click(clicks=1, button='left', interval=0.05) 
+    pyautogui.click(clicks=1, button='left', interval=0.05)
     time.sleep(3)
     # 是
     # yes_img = pyautogui.locateOnScreen("C:\\Users\\randolph\\Desktop\\yes.png")
     # print(yes_img)
     # pyautogui.moveTo(yes_img, duration=.5)
-    # pyautogui.click(clicks=1, button='left', interval=0.05) 
+    # pyautogui.click(clicks=1, button='left', interval=0.05)
     # 测试案例
     auto_send_msg()
     time.sleep(2)
@@ -102,13 +102,13 @@ def auto_run():
     stop_record_img = pyautogui.locateOnScreen("C:\\Users\\randolph\\Desktop\\stop_record.png")
     print(stop_record_img)
     pyautogui.moveTo(stop_record_img, duration=.5)
-    pyautogui.click(clicks=1, button='left', interval=0.05) 
+    pyautogui.click(clicks=1, button='left', interval=0.05)
     # 自动关闭
     stop_img = pyautogui.locateOnScreen("C:\\Users\\randolph\\Desktop\\stop.png")
     print(stop_img)
     pyautogui.moveTo(stop_img, duration=.5)
-    pyautogui.click(clicks=1, button='left', interval=0.05) 
-    
+    pyautogui.click(clicks=1, button='left', interval=0.05)
+
 
 if __name__ == "__main__":
     # send_zhihu_comment()
@@ -118,4 +118,3 @@ if __name__ == "__main__":
     # all_wins = pyautogui.getActiveWindowTitle()
     # print(all_wins)
     # auto_run()
-    

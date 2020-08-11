@@ -4,29 +4,26 @@ import os
 import re
 
 import pandas as pd
-controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-interface\\src\\main\\java\\org\\srm\\interfaces\\api\\controller\\v1\\"
-# controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-platform\\src\\main\\java\\org\\srm\\platform\\api\\controller\\v1\\"
 
-# controllers_root_path = r"E:\\randolph-zy\\公有云加解密\\srm-supplier\\src\\main\\java\\org\\srm\\supplier\\api\\controller\\v1\\"
-sheet_name = controllers_root_path.split('\\')[6]       # sheet页命名是类似srm-supplier的服务名
 header = ["controller", "url", "request", "对应菜单", "状态", "技术", "测试"]       # 表格头，除了前三项，后面均可改动
-ROOT_PATH = os.path.dirname(controllers_root_path)
-all_files = os.listdir(ROOT_PATH)       # 输入文件夹名称列表
-
 FILE_ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
 output = os.path.join(FILE_ROOT_PATH, "公有云加解密.xlsx")      # 输出文件夹
+# 源文件夹各服务
+# root_dir = "E:/randolph-zy/公有云加解密/srm-platform"
+root_dir = "E:/randolph-zy/公有云加解密/srm-mall"
+sheet_name = root_dir.split('/')[3]       # sheet页命名是类似srm-supplier的服务名
+controller_f_paths = []
+controller_f_names = []
 
 
-def scan(files: list) -> dict:
+def scan(paths: list, names: list) -> dict:
     '''扫描该文件夹下所有controller类文件，整理出接口
-    TODO:需要优化为只提供服务根目录文件夹路径，自动扫描所有层次文件夹中的controller
     返回值格式{'文件名': [[url1, url2, ...], [request1, ...]]}
     '''
     res = dict()
-    for i, filename in enumerate(files):
-        abs_file = os.path.join(ROOT_PATH, filename)
-        # print(i + 1, abs_file)
-        with open(abs_file, 'r', encoding='utf8') as rfile:  # 打开文件
+    for i, (path, name) in enumerate(zip(paths, names)):
+        print(i + 1, path)
+        with open(path, 'r', encoding='utf8') as rfile:  # 打开文件
             java_file = rfile.readlines()       # 读取全部内容
             controller_file_content_list = [x.strip() for x in java_file if x.strip() != '']       # 去换行符和空格
             url = []        # 每一个controller下的请求地址列表
@@ -51,7 +48,7 @@ def scan(files: list) -> dict:
                         else:
                             url.append(request_mapping_url + str(child_url[0]))
                             request.append(req_type)
-                        res[filename] = [url, request]
+                        res[name] = [url, request]
     return res
 
 
@@ -71,7 +68,7 @@ def save_file(res_dict: dict, path: str = None) -> None:
     df = read_file(path)    # 打开目标文件
     for i, (k, v) in enumerate(res_dict.items()):
         for url, type in zip(v[0], v[1]):
-            df.loc[i] = [k, url, type, None, None, '李静玲', None]
+            df.loc[i] = [k, url, type, None, None, 'XXX', None]
     print(df)
     # 检查是否已存在同名sheet页!!
     check_df = pd.read_excel(path, sheet_name=None)
@@ -83,7 +80,28 @@ def save_file(res_dict: dict, path: str = None) -> None:
         print("已经存在同名sheet页!!")
 
 
+def getallfile(path: str) -> list:
+    '''获取所有controller文件的绝对路径
+    '''
+    # 遍历该文件夹下的所有目录或文件
+    for f in os.listdir(path):
+        f_path = os.path.join(path, f)
+        # 是文件夹则递归
+        if os.path.isdir(f_path):
+            getallfile(f_path)
+        # 不是文件夹则判断是否为Controller并保存文件路径及文件名
+        elif os.path.isfile(f_path):
+            if "Controller.java" in f:
+                controller_f_paths.append(f_path)
+                controller_f_names.append(f)
+    return controller_f_paths, controller_f_names
+
+
 if __name__ == "__main__":
-    print("》》》新增sheet:" + sheet_name)
-    res = scan(all_files)       # 扫描api
-    save_file(res, output)      # 保存结果
+    print("》》》获取服务controller绝对路径列表:" + sheet_name)
+    paths, names = getallfile(root_dir)
+    print(len(paths), len(names))
+    print("》》》扫描服务api:" + sheet_name)
+    result = scan(paths, names)       # 扫描api
+    print("》》》保存服务api结果列表:" + sheet_name)
+    save_file(result, output)      # 保存结果
