@@ -109,12 +109,25 @@ def auto_run():
     pyautogui.moveTo(stop_img, duration=.5)
     pyautogui.click(clicks=1, button='left', interval=0.05)
 
+def clean_dustbin():
+    pyautogui.hotkey('winleft', 'd')        # 切回桌面
+    pyautogui.moveTo((1089,640), duration=.5)            # 移动到桌面回收站图标坐标位置
+    pyautogui.rightClick()                  # 单击右键
+    pyautogui.moveTo((1131,518), duration=.5)            # 移动到桌面回收站图标坐标右键选项清理回收站位置
+    pyautogui.click()                       # 点击左键
+    pyautogui.moveTo((759,459), duration=.5)             # 移动到清理回收站确认菜单 是 按钮坐标位置
+    pyautogui.click()                       # 点击左键
+    
 
 if __name__ == "__main__":
     # send_zhihu_comment()
-    auto_send_msg()
-    # print(pyautogui.mouseInfo())
-    # pyautogui.moveTo(x=1227, y=329, duration=.5)
+    # auto_send_msg()
+    # auto_run()
     # all_wins = pyautogui.getActiveWindowTitle()
     # print(all_wins)
-    # auto_run()
+    # pyautogui.mouseInfo()
+    time.sleep(3)
+    clean_dustbin()
+    time.sleep(2)
+    
+    

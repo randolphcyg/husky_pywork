@@ -11,6 +11,9 @@ output = os.path.join(FILE_ROOT_PATH, "公有云加解密.xlsx")      # 输出�
 # 源文件夹各服务
 # root_dir = "E:/randolph-zy/公有云加解密/srm-platform"
 root_dir = "E:/randolph-zy/公有云加解密/srm-mall"
+# root_dir = "E:/randolph-zy/公有云加解密/srm-source"
+# root_dir = "E:/randolph-zy/公有云加解密/srm-basic-platform"
+# root_dir = "E:/randolph-zy/公有云加解密/srm-mdm"
 sheet_name = root_dir.split('/')[3]       # sheet页命名是类似srm-supplier的服务名
 controller_f_paths = []
 controller_f_names = []
@@ -68,7 +71,7 @@ def save_file(res_dict: dict, path: str = None) -> None:
     df = read_file(path)    # 打开目标文件
     for i, (k, v) in enumerate(res_dict.items()):
         for url, type in zip(v[0], v[1]):
-            df.loc[i] = [k, url, type, None, None, 'XXX', None]
+            df.loc[i] = [k, url, type, None, None, '蔡迎港', None]
     print(df)
     # 检查是否已存在同名sheet页!!
     check_df = pd.read_excel(path, sheet_name=None)
