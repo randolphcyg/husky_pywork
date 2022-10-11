@@ -25,6 +25,11 @@ husky_pywork主要记录小的不需要长期迭代的项目，主要涉及`tkin
 或者
 `pip install -p Pipfile.lock`   根据 Pipfile.lock 安装指定依赖
 
+```diff
+- pip install -p
++ pip install -p Pipfile.lock
+```
+
 ### 4.使用说明
 
 | 模块                      | 描述                                                         |
